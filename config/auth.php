@@ -43,6 +43,9 @@ return [
         'mobile' => [
             'driver' => 'sanctum',
             'provider' => 'mobile_users',
+        ],'expert' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Expert::class,
         ],
 
     ],
@@ -72,6 +75,9 @@ return [
         'mobile_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\MobileUser::class,
+        ],'experts' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Expert::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
