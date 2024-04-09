@@ -15,11 +15,6 @@ class MobileUser extends Authenticatable
         'it_student', 'university', 'bio',
     ];
 
-    // Relation with Roadmap
-    public function roadmaps() {
-        return $this->hasMany(Roadmap::class, 'publisher_id');
-    }
-
     // Assuming MobileUser can have multiple technologies through tests
     public function technologies() {
         return $this->hasManyThrough(Technology::class, Test::class);

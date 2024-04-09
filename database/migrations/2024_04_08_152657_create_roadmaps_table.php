@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('roadmaps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('publisher_id')->constrained('mobile_users');
+            $table->foreignId('expert_id')->constrained('experts');
             $table->string('title');
             $table->string('title_ar');
             $table->text('description');
