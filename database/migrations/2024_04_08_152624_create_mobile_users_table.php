@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('verify');
+            $table->boolean('verify')->default(false);
             $table->string('name');
             $table->string('image')->nullable();
-            $table->date('birth_date');
-            $table->boolean('it_student');
-            $table->string('university');
+            $table->date('birth_date')->nullable();
+            $table->boolean('it_student')->nullable();
+            $table->string('university')->nullable();
             $table->text('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();
