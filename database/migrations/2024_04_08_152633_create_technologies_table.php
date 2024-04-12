@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name_ar');
             $table->text('description');
             $table->text('description_ar');
-            $table->string('image')->nullable();
-            $table->json('videos')->nullable(); // Assuming videos can be stored as an array of URLs
+            $table->string('image');
+            $table->json('videos'); // Assuming videos can be stored as an array of URLs
             $table->timestamps();
         });
     }

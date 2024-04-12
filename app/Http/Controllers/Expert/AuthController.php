@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Expert;
 
+use App\Models\Expert;
 use App\Models\User;
+use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    use FileStorageTrait ;
     /**
      * Show the admin dashboard.
      *
@@ -19,7 +22,10 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        return view('expert.dashboard') ;
+        $user = Auth::guard('expert')->user() ;
+        $roadmaps= $user->roadmaps;
+
+        return view('expert.dashboard' , compact('user' , 'roadmaps')) ;
     }
 
     /**
@@ -48,7 +54,7 @@ class AuthController extends Controller
             'password' => 'required'
         ])->validate();
 
-        if (!auth()->attempt($data)) {
+        if (!Auth::guard('expert')->attempt($data)) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed')
             ]);
@@ -79,19 +85,22 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $data = $request->all();
-
         Validator::make($data, [
             'firstname'            => 'required|string|max:255',
             'lastname'             => 'required|string|max:255',
             'email'                => 'required|string|email|max:255|unique:users',
             'password'             => 'required|string|min:8|confirmed',
+            'image'                => 'required|image',
             'terms'                => 'accepted',
         ])->validate();
+        $path = $this->storefile($request['image'],'expert_profile_image');
 
-        User::create([
+        Expert::create([
             'name' => $request['firstname'] . ' ' . $request['lastname'],
-            'email'           => $data['email'],
-            'password'        => Hash::make($data['password']),
+            'email' => $request['email']
+            ,'password' => Hash::make($request['password'])
+            ,'image' => $path[0]
+            ,'bio'=> $request['bio']
         ]);
 
         return redirect()->route('expert.login');
@@ -104,7 +113,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        auth()->guard('expert')->logout();
 
         request()->session()->invalidate();
 

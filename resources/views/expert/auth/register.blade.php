@@ -9,7 +9,7 @@
     <link rel="icon" href="{{asset('images/favicon.ico')}}">
 
 
-    <title>Wasfati Admin SignUp</title>
+    <title>RouteIT Expert SignUp</title>
     @include('layouts.expert.head') ;
 
     <style>
@@ -41,7 +41,7 @@
                         <!-- ... [Previous HTML Code] ... -->
 
                         <div class="p-40">
-                            <form action="{{ route('admin.register.save') }}" id="registerForm" method="post">
+                            <form action="{{ route('expert.register.save') }}" id="registerForm" method="post" enctype="multipart/form-data">
                             @csrf  <!-- CSRF token for security -->
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -55,27 +55,35 @@
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="First Name" name="firstname">
-                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Last Name" name="lastname">
+                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="First Name" name="firstname" required>
+                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Last Name" name="lastname"required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
-                                        <input type="email" class="form-control ps-15 bg-transparent" placeholder="Email" name="email">
+                                        <input type="email" class="form-control ps-15 bg-transparent" placeholder="Email" name="email" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-                                        <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password">
+                                        <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-                                        <input type="password" class="form-control ps-15 bg-transparent" placeholder="Retype Password" name="password_confirmation">
+                                        <input type="password" class="form-control ps-15 bg-transparent" placeholder="Retype Password" name="password_confirmation" required>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Bio</label>
+                                    <textarea rows="5" class="form-control" name="bio" placeholder="Bio" required ></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Profile Image</label>
+                                    <input class="form-control" type="file" name="image" id="formFile" required accept="image/*">
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -92,7 +100,7 @@
                                 </div>
                             </form>
                             <div class="text-center">
-                                <p class="mt-15 mb-0">Already have an account?<a href="{{route('admin.login')}}" class="text-danger ms-5"> Sign In </a></p>
+                                <p class="mt-15 mb-0">Already have an account?<a href="{{route('expert.login')}}" class="text-danger ms-5"> Sign In </a></p>
                             </div>
                         </div>
                         <!-- ... [Rest of the HTML Code] ... -->

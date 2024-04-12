@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Technology extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'name_ar', 'description', 'description_ar', 'image', 'videos'];
+    protected $fillable = ['name', 'name_ar', 'description', 'description_ar', 'image', 'videos' , 'technology_category_id'];
 
     // Relation with TechnologyLevel
     public function levels() {
@@ -20,8 +20,12 @@ class Technology extends Model
         return $this->hasMany(Test::class);
     }
 
+    // Relation with RoadMap
+    public function roadmaps() {
+        return $this->hasMany(Roadmap::class);
+    }
     // Assuming Technology belongs to TechnologyCategory
     public function category() {
-        return $this->belongsTo(TechnologyCategory::class);
+        return $this->belongsTo(TechnologyCategory::class , 'technology_category_id');
     }
 }
