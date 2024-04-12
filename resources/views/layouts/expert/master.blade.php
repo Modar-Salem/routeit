@@ -10,7 +10,7 @@
 
 
     @include('layouts.expert.head')
-
+@yield('style')
 </head>
 
 <body class="hold-transition light-skin sidebar-mini theme-success fixed">
