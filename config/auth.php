@@ -44,8 +44,8 @@ return [
             'driver' => 'session',
             'provider' => 'mobile_users',
         ],'expert' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Expert::class,
+            'driver' => 'session',
+            'provider' => 'experts',
         ],
 
     ],

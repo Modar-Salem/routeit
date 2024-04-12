@@ -11,5 +11,5 @@
 <!-- Rhythm Admin App -->
 <script src="{{ \Illuminate\Support\Facades\URL::asset('dashboard/js/template.js')}}"></script>
 <script src="{{ \Illuminate\Support\Facades\URL::asset('dashboard/js/pages/dashboard.js')}}"></script>
-
+<script src="{{\Illuminate\Support\Facades\URL::asset('assets/vendor_components/dropzone/dropzone.js')}}"></script>
 @yield('scripts')

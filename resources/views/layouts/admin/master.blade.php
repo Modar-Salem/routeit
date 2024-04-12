@@ -9,7 +9,7 @@
     <link rel="icon" href={{asset("images/favicon.ico")}}>
 
 
-    @include('layouts.expert.head')
+    @include('layouts.admin.head')
 
 </head>
 
@@ -17,10 +17,10 @@
 
 <div class="wrapper">
     <div id="loader"></div>
-    @include('layouts.expert.main-headbar')
+    @include('layouts.admin.main-headbar')
 
 
-    @include('layouts.expert.main-sidebar')
+    @include('layouts.admin.main-sidebar')
 
     <!-- Content Wrapper. Contains page content -->
     @yield('content')
@@ -30,7 +30,7 @@
 </div>
 
 <!-- Vendor JS -->
-@include('layouts.expert.footer-scripts')
+@include('layouts.admin.footer-scripts')
 
 </body>
 

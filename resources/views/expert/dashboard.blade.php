@@ -1,71 +1,93 @@
 @extends('layouts.expert.master')
 @section('title')
-    Admin Dashboard
+    Expert Dashboard
 @endsection
-    @section('route_dashboard')
-        <a href="{{route('admin.dashboard')}}" class="logo">
-    @endsection
+@section('route_dashboard')
+    <a href="{{route('expert.dashboard')}}" class="logo">
+        @endsection
+        @section('style')
+            <style>
+                .icon-container {
+                    display: flex;
+                    justify-content: space-between;
+                }
 
-@section('content')
+                .fa {
+                    font-size: 20px;
+                    margin-left: 10px;
+                    transition: transform 0.3s;
+                }
 
-    <div class="content-wrapper">
-        <div class="container-full">
-            <!-- Main content -->
-            <section class="content">
-                <div class="row">
-                    <div class="col-xl-8 col-12">
+                .fa:hover {
+                    transform: scale(1.1);
+                }
+
+                .fa.fa-file-pdf-o::after,
+                .fa.fa-play-circle::after {
+                    content: attr(data-info);
+                    position: absolute;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    color: #fff;
+                    padding: 3px;
+                    border-radius: 5px;
+                    display: none;
+                }
+
+                .fa.fa-file-pdf-o:hover::after,
+                .fa.fa-play-circle:hover::after {
+                    display: block;
+                }
+            </style>
+        @endsection
+        @section('content')
+
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Your Road-Maps</h4>
+                        <a href="{{route('expert.roadmap.create')}}" class="btn btn-primary">Add RoadMap</a>
+                    </div>
+                </div>
+                <div class="container-full">
+                    <!-- Main content -->
+                    <section class="content">
                         <div class="row">
-                            <div class="col-xl-3 col-md-6 col-6">
-                                <div class="box">
-                                    <div class="box-body text-center">
-                                        <div class="bg-primary-light rounded10 p-20 mx-auto w-100 h-100">
-                                            <img src="../images/svg-icon/medical/icon-1.svg" class="" alt="" />
+                            <div class="row">
+                                <div class="row">
+                                    @foreach($roadmaps as $roadmap)
+                                        <div class="col-md-12 col-lg-4">
+                                            <div class="card">
+                                                <a href="{{route('expert.skills.index' ,$roadmap->id )}}">
+                                                    <img class="card-img-top"
+                                                         src="{{asset('storage/'.$roadmap->cover)}}"
+                                                         alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">{{$roadmap->title}}</h4>
+                                                        <p class="card-text">{{$roadmap->description}}</p>
+                                                    </div>
+                                                </a>
+                                                <div class="card-footer justify-content-between d-flex">
+                                                    <span
+                                                        class="text-muted">Last updated on : {{$roadmap->updated_at->format('Y-M-D')}}</span>
+                                                    <span>
+                        <a href="{{asset('storage/'.$roadmap->target_cv)}}"><i class="fa fa-file-pdf-o"
+                                                                               aria-hidden="true"
+                                                                               data-info="Target CV"></i></a>
+                        <a href="{{asset('storage/'.$roadmap->introductory_video)}}">	<i class="fa fa-play-circle"
+                                                                                            aria-hidden="true"
+                                                                                            data-info="Intro Video"></i></a>
+					</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="text-fade mt-15 mb-5">Total Patients</p>
-                                        <h2 class="mt-0">1,548</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-6">
-                                <div class="box">
-                                    <div class="box-body text-center">
-                                        <div class="bg-danger-light rounded10 p-20 mx-auto w-100 h-100">
-                                            <img src="../images/svg-icon/medical/icon-2.svg" class="" alt="" />
-                                        </div>
-                                        <p class="text-fade mt-15 mb-5">Consulation</p>
-                                        <h2 class="mt-0">448</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-6">
-                                <div class="box">
-                                    <div class="box-body text-center">
-                                        <div class="bg-warning-light rounded10 p-20 mx-auto w-100 h-100">
-                                            <img src="../images/svg-icon/medical/icon-3.svg" class="" alt="" />
-                                        </div>
-                                        <p class="text-fade mt-15 mb-5">Staff</p>
-                                        <h2 class="mt-0">848</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-6">
-                                <div class="box">
-                                    <div class="box-body text-center">
-                                        <div class="bg-info-light rounded10 p-20 mx-auto w-100 h-100">
-                                            <img src="../images/svg-icon/medical/icon-4.svg" class="" alt="" />
-                                        </div>
-                                        <p class="text-fade mt-15 mb-5">Total Rooms</p>
-                                        <h2 class="mt-0">3,100</h2>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
+                    <!-- /.content -->
                 </div>
-            </section>
-            <!-- /.content -->
-        </div>
-    </div>
+            </div>
 
 
 @endsection

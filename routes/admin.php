@@ -27,7 +27,28 @@ Route::controller(\App\Http\Controllers\Admin\AuthController::class)->group(func
     Route::post('logout', 'logout')->name('admin.logout')->middleware(['auth']);
 
 });
+Route::controller(\App\Http\Controllers\admin\TechnologyCategoryController::class)->middleware(['auth'])->prefix('technology_category')->group(function () {
+    Route::get('index' , 'index')->name('admin.technology_category.index') ;
+    Route::get('create' , 'create')->name('admin.technology_category.create') ;
+    Route::post('store' , 'store')->name('admin.technology_category.store') ;
+    Route::get('/{technology_category}' , 'show')->name('admin.technology_category.show') ;
+    Route::get('{technology_category}/edit' , 'edit')->name('admin.technology_category.edit') ;
+    Route::put('/{technology_category}' , 'update')->name('admin.technology_category.update') ;
+    Route::delete('/{technology_category}' , 'destroy')->name('admin.technology_category.destroy') ;
 
+});
+
+Route::controller(\App\Http\Controllers\admin\TechnologyController::class)->middleware(['auth'])->prefix('technology')->group(function () {
+
+    Route::get('index' , 'index')->name('admin.technology.index') ;
+    Route::get('create' , 'create')->name('admin.technology.create') ;
+    Route::post('store' , 'store')->name('admin.technology.store') ;
+    Route::get('/{technology}' , 'show')->name('admin.technology.show') ;
+    Route::get('{technology}/edit' , 'edit')->name('admin.technology.edit') ;
+    Route::put('/{technology}' , 'update')->name('admin.technology.update') ;
+    Route::delete('/{technology}' , 'destroy')->name('admin.technology.destroy') ;
+
+});
 Route::middleware(['auth'])->group(function (){
     Route::get('dashboard' , [\App\Http\Controllers\Admin\AuthController::class , 'dashboard'])->name('admin.dashboard');
 });

@@ -103,8 +103,8 @@
                     <a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent py-0 no-shadow" data-bs-toggle="dropdown" title="User">
                         <div class="d-flex pt-5">
                             <div class="text-end me-10">
-                                <p class="pt-5 fs-14 mb-0 fw-700 text-primary">{{$user->firstname . ' ' .  $user->lastname}}</p>
-                                <small class="fs-10 mb-0 text-uppercase text-mute">Admin</small>
+                                <p class="pt-5 fs-14 mb-0 fw-700 text-primary">{{\Illuminate\Support\Facades\Auth::user()->name }}</p>
+                                <small class="fs-10 mb-0 text-uppercase text-mute">Expert</small>
                             </div>
                             <img src="{{asset('images/avatar/avatar-1.png')}}" class="avatar rounded-10 bg-primary-light h-40 w-40" alt="" />
                         </div>
@@ -116,7 +116,7 @@
                             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="ti-lock text-muted me-2"></i> Logout
                             </a>
-                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('expert.logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </li>
