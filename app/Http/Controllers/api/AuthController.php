@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\api\EmailVerificationMail;
 use App\Models\MobileEmailVerificationCode;
 use App\Models\MobileUser;
-use http\Env\Response;
 use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,24 +66,30 @@ class AuthController extends Controller
 
     public function checkEmailVerificationCode(Request $request)
     {
-        $code = $request->code;
-        $userCodeModel = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+        try {
+            $code = $request->code;
+            $userCodeModel = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
 
-        if ($userCodeModel === null) {
+            if ($userCodeModel === null) {
+                return response()->json([
+                    'message' => 'Wrong Verification Code'
+                ], 200);
+            }
+
+            $userModel = MobileEmailVerificationCode::find(1)->user;
+            $userModel->verify = true;
+            $userModel->save();
+
+            $userCodeModel->delete();
+
             return response()->json([
-                'message' => 'Wrong Verification Code'
+                'message' => 'Correct Verification Code'
             ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => $e
+            ], 400);
         }
-
-        $userModel = MobileUser::where('id', $userCodeModel['user_id'])->first();
-        $userModel->verify = true;
-        $userModel->save();
-
-        $userCodeModel->delete();
-
-        return response()->json([
-            'message' => 'Correct Verification Code'
-        ], 200);
     }
 
     public function login(Request $request)
