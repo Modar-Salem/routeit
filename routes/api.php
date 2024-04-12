@@ -20,6 +20,7 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
+    Route::post('completeRegister', 'completeRegister');
 });
 
 Route::middleware('auth:sanctum')->group( function () {

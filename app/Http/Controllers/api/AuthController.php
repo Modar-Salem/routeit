@@ -10,6 +10,7 @@ use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use function Laravel\Prompts\password;
 
 class AuthController extends Controller
@@ -90,6 +91,45 @@ class AuthController extends Controller
                 'message' => $e
             ], 400);
         }
+    }
+
+    public function completeRegister(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,gif', 'max:10240'],
+            'birth_date' => ['required', 'date', 'after:01/01/1900', 'before:today'],
+            'it_student' => ['required', 'boolean'],
+            'university' => ['required', 'string', 'max:255'],
+            'bio' => ['required', 'min:3', 'max: 1024'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => "There is something incorrect",
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $image = $request->image;
+        $ext = $image->getClientOriginalExtension();
+        $imageName = time() . '.' . $ext;
+        $image->move(public_path() . '/images/API_Images/profilePhotos/', $imageName);
+
+        $user = MobileUser::where('email', $data['email'])->first();
+        $user->update([
+            'image' => $imageName,
+            'birth_date' => $data['birth_date'],
+            'it_student' => $data['it_student'],
+            'university' => $data['university'],
+            'bio' => $data['bio']
+        ]);
+
+        return response()->json([
+            'message' => "Register completed successfully",
+            'User Info' => $user
+        ], 200);
     }
 
     public function login(Request $request)
