@@ -33,3 +33,15 @@ Route::controller(\App\Http\Controllers\Expert\SkillController::class)->middlewa
     Route::put('/{skill}' , 'update')->name('expert.skills.update') ;
     Route::delete('/{skill}' , 'destroy')->name('expert.skills.destroy') ;
 });
+
+
+Route::controller(\App\Http\Controllers\Expert\SkillContentController::class)->middleware(['auth:expert'])->prefix('skill_content')->group(function () {
+
+    Route::get('index/{skill_id}' , 'index')->name('expert.skills_content.index') ;
+    Route::get('create/{skill_id}' , 'create')->name('expert.skills_content.create') ;
+    Route::post('store/{skill_id}' , 'store')->name('expert.skills_content.store') ;
+    Route::get('/{skill_content}' , 'show')->name('expert.skills_content.show') ;
+    Route::get('{skill_content}/edit' , 'edit')->name('expert.skills_content.edit') ;
+    Route::put('/{skill_content}' , 'update')->name('expert.skills_content.update') ;
+    Route::delete('/{skill_content}' , 'destroy')->name('expert.skills_content.destroy') ;
+});

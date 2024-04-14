@@ -51,7 +51,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">image</label>
-                                                <img src="{{ asset('storage/' . $file) }}" alt="{{ $fileInfo['filename'] }}" class="file-thumbnail">
+                                            <hr/>
+                                                <img src="{{ asset('storage/' . $technology_category->image) }}"  class="file-thumbnail">
                                         </div>
                                     </div>
                                     <!-- /.box-body -->

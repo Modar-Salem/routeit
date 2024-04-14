@@ -1,6 +1,6 @@
 @extends('layouts.expert.master')
 @section('title')
-    Skill Content Table
+    Skills Table
 @endsection
 
 @section('route_dashboard')
@@ -18,8 +18,9 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header d-flex justify-content-between align-items-center">
-                                <h4 class="box-title">RoadMap Skills Content Information</h4>
-                                <a href="{{route('expert.skills.create' , $roadmap_id)}}" class="btn btn-primary" style="margin-right: 20px; width: 20%">Add Skill</a>
+                                <h4 class="box-title">Skill Content Information</h4>
+                                <a href="{{route('expert.skills_content.create' , $skill_id)}}" class="btn btn-primary" style="margin-right: 20px; width: 20%">Add Video or Blog</a>
+
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
@@ -28,24 +29,43 @@
                                            style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>Type</th>
                                                 <th>Title</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($skills as $skill)
+                                        @foreach($videos as $skill_content)
                                             <tr>
-                                                <td>{{ $skill->title}}</td>
+                                                <td>Video</td>
+                                                <td>{{ $skill_content->title}}</td>
                                                 <td>
                                                     <div class="d-flex flex-row">
                                                         <div class="btn-group">
-                                                            <form action="{{ route('expert.skills.destroy', $skill) }}" method="POST" onsubmit="return confirm('Delete?')">
+                                                            <form action="{{ route('expert.skills_content.destroy', $skill_content) }}" method="POST" onsubmit="return confirm('Delete?')">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button class="waves-effect waves-light btn btn-danger-light  ml-3" style="width:100%; height: 100% ;">Delete</button>
                                                             </form>
-                                                            <a href="{{ route('expert.skills.edit', $skill) }}" type="button" class="waves-effect waves-light btn btn-warning-light  ml-3">Edit</a>
-                                                            <a href="{{ route('expert.skills_content.index', $skill) }}" type="button" class="btn btn-primary ml-3">Add Video OR Blogs &rarr;</a>
+                                                            <a href="{{ route('expert.skills_content.show', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show Video &rarr;</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        @foreach($blogs as $skill_content)
+                                            <tr>
+                                                <td>Blogs</td>
+                                                <td>{{ $skill_content->title}}</td>
+                                                <td>
+                                                    <div class="d-flex flex-row">
+                                                        <div class="btn-group">
+                                                            <form action="{{ route('expert.skills_content.destroy', $skill_content ) }}" method="POST" onsubmit="return confirm('Delete?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="waves-effect waves-light btn btn-danger-light  ml-3" style="width:100%; height: 100% ;">Delete</button>
+                                                            </form>
+                                                            <a href="{{ route('expert.skills_content.show', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show  Blogs &rarr;</a>
                                                         </div>
                                                     </div>
                                                 </td>

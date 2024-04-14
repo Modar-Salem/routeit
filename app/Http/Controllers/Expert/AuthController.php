@@ -88,7 +88,7 @@ class AuthController extends Controller
         Validator::make($data, [
             'firstname'            => 'required|string|max:255',
             'lastname'             => 'required|string|max:255',
-            'email'                => 'required|string|email|max:255|unique:users',
+            'email'                => 'required|string|email|max:255|unique:experts',
             'password'             => 'required|string|min:8|confirmed',
             'image'                => 'required|image',
             'terms'                => 'accepted',

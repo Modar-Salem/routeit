@@ -71,6 +71,24 @@ class SkillController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $skill = RoadmapSkill::find($id) ;
+
+        $skill->delete() ;
+        return redirect()->back() ;
+
+    }
+
+    public function getSkillVideosBlogs(string $id)
+    {
+    }
+
+    public function getdetailsSkillVideosBlogs(string $id)
+    {
+
+    }
+
+    public function destroySkillVideosBlogs(string $id)
+    {
+
     }
 }

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roadmap_skill_articles', function (Blueprint $table) {
+        Schema::create('article_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
-            $table->text('title');
+            $table->foreignId('article_id')->constrained('roadmap_skill_articles') ;
+            $table->string('title')  ;
+            $table->string('content') ;
+            $table->string('image')->nullable() ;
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roadmap_skill_articles');
+        Schema::dropIfExists('article_sections');
     }
 };
