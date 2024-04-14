@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             MobileUserSeeder::class,
+            TechnologyCategoriesSeeder::class,
+            TechnologiesSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

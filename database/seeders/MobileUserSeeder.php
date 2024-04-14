@@ -14,7 +14,7 @@ class MobileUserSeeder extends Seeder
     public function run(): void
     {
         MobileUser::create([
-            'email' => 'waassim@gmail.com',
+            'email' => 'wassim@gmail.com',
             'password' => bcrypt('123456'),
             'name' => 'wassim',
             'image' => 'https://th.bing.com/th/id/OIP.v36XBUcQei_95GjMzpAGRgHaLH?w=181&h=272&c=7&r=0&o=5&dpr=1.4&pid=1.7',
@@ -24,7 +24,7 @@ class MobileUserSeeder extends Seeder
             'bio' => 'No bio needed',
         ]);
         MobileUser::create([
-            'email' => 'waassim2@gmail.com',
+            'email' => 'wassim2@gmail.com',
             'password' => bcrypt('123456'),
             'name' => 'wassim2',
             'image' => 'https://thumbs.dreamstime.com/z/cool-guy-8809192.jpg',
@@ -34,7 +34,7 @@ class MobileUserSeeder extends Seeder
             'bio' => 'bio needed',
         ]);
         MobileUser::create([
-            'email' => 'waassim3@gmail.com',
+            'email' => 'wassim3@gmail.com',
             'password' => bcrypt('123456'),
             'name' => 'wassim3',
             'image' => 'https://th.bing.com/th/id/OIP.tHP9-Z5XX7fvzAjPnLgeXAHaLH?rs=1&pid=ImgDetMain',

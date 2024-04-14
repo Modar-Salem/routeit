@@ -77,7 +77,7 @@ class AuthController extends Controller
                 ], 200);
             }
 
-            $userModel = MobileEmailVerificationCode::find(1)->user;
+            $userModel = MobileEmailVerificationCode::find($userCodeModel['id'])->user;
             $userModel->verify = true;
             $userModel->save();
 
