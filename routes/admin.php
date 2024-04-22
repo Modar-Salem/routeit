@@ -49,7 +49,14 @@ Route::controller(\App\Http\Controllers\admin\TechnologyController::class)->midd
     Route::delete('/{technology}' , 'destroy')->name('admin.technology.destroy') ;
 
 });
+Route::controller(\App\Http\Controllers\admin\TestController::class)->middleware(['auth'])->prefix('test')->group(function () {
+    Route::get('index' , 'index')->name('admin.test.index') ;
+    Route::get('create' , 'create')->name('admin.test.create') ;
+    Route::post('store' , 'store')->name('admin.test.store') ;
+});
+
 Route::middleware(['auth'])->group(function (){
     Route::get('dashboard' , [\App\Http\Controllers\Admin\AuthController::class , 'dashboard'])->name('admin.dashboard');
+
 });
 

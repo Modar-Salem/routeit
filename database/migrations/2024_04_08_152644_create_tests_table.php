@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('technologies')->constrained('technologies');
+            $table->foreignId('technology_id')->constrained('technologies');
             $table->integer('total_xp');
             $table->timestamps();
         });

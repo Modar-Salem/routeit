@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Expert;
 use App\Http\Controllers\Controller;
 use App\Models\Roadmap;
 use App\Models\Technology;
+use App\Models\TechnologyLevel;
 use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,7 @@ class RoadMapController extends Controller
     {
         $request->validate([
             'technology_id' => 'required|exists:technologies,id',
+            'level' => 'required|in:junior,mid-level,senior' ,
             'title' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'description' => 'required|string',
@@ -38,7 +40,7 @@ class RoadMapController extends Controller
         ]);
 
         $data = $request->all();
-
+        $data['technology_level_id'] = TechnologyLevel::where('technology_id' , $request['technology_id'])->where('level' , $request['level'])->first()->id;
         $data['expert_id'] = Auth::guard('expert')->id() ;
 
         if ($request->hasFile('introductory_video')) {

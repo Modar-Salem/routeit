@@ -36,7 +36,7 @@
                                         <div class="box-body">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <h5 class="my-10">Select The Technology</h5>
+                                                    <h5 class="my-10">Select The Technology Category</h5>
                                                     <select name="technology_category_id" class="selectpicker">
                                                         @foreach($technology_categories as $technology_category)
                                                             <option value="{{$technology_category->id}}">{{$technology_category->name}}</option>

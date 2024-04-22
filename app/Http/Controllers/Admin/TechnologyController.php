@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Technology;
 use App\Models\TechnologyCategory;
+use App\Models\TechnologyLevel;
 use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
 
@@ -45,12 +46,13 @@ class TechnologyController extends Controller
             'technology_category_id' => 'required|exists:technology_categories,id' // Assuming technology_categories is the table name
         ]);
 
+
         $imagePath = $this->storefile($request['image'] , 'Technology Images') ;
 
         $videoPaths = json_encode($this->handleFiles($request['videos'], 'Technology Videos'));
 
 
-        Technology::create([
+        $technology = Technology::create([
             'name' => $request->name,
             'name_ar' => $request->name_ar,
             'description' => $request->description,
@@ -59,6 +61,7 @@ class TechnologyController extends Controller
             'videos' => $videoPaths,
             'technology_category_id' => $request->technology_category_id
         ]);
+
         return redirect()->route('admin.technology.index') ;
 
     }

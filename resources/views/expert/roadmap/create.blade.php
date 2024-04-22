@@ -41,6 +41,16 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h5 class="my-10">Select The Level</h5>
+                                                        <select name="level" class="selectpicker">
+                                                            <option value="junior">junior</option>
+                                                            <option value="mid-level">mid-level</option>
+                                                            <option value="senior">senior</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <hr class="my-15">
 
                                                 <div class="row">
