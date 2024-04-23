@@ -30,7 +30,7 @@ class MobileUser extends Authenticatable
 
     public function emailVerificationCode()
     {
-        return $this->hasOne(MobileEmailVerificationCode::class);
+        return $this->hasOne(MobileEmailVerificationCode::class, 'user_id');
     }
 
     // Assuming MobileUser can have multiple technologies through tests

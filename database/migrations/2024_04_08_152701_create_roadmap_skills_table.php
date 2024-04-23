@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('roadmap_id')->constrained('roadmaps');
             $table->string('title');
             $table->timestamps();
-
         });
     }
 

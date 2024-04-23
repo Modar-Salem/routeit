@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,13 @@ Route::controller(AuthController::class)->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group( function () {
+    /* Auth Controller */
     Route::post('logout', [AuthController::class, 'logout']);
+    /* TechnologyCategories Controller */
     Route::get('getTechnologyCategories', [TechnologyCategoriesController::class, 'getTechnologyCategories']);
     Route::get('getTechnologies', [TechnologyCategoriesController::class, 'getTechnologies']);
+    Route::get('getTechnologyLevels', [TechnologyCategoriesController::class, 'getTechnologyLevels']);
+    /* Roadmaps Controller*/
+    Route::get('getRoadmaps', [RoadmapsController::class, 'getRoadmaps']);
+    Route::get('getRoadmapSkills', [RoadmapsController::class, 'getRoadmapSkills']);
 });

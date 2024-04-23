@@ -17,69 +17,65 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        try {
-            $request->validate([
-                'name' => ['required', 'max:250'],
-                'email' => ['required', 'email', 'unique:mobile_users', 'max:250'],
-                'password' => ['required', 'max:250'],
-                'password_confirmation' => ['required', 'same:password']
-            ]);
+        $request->validate([
+            'name' => ['required', 'max:250'],
+            'email' => ['required', 'email', 'unique:mobile_users', 'max:250'],
+            'password' => ['required', 'max:250'],
+            'password_confirmation' => ['required', 'same:password']
+        ]);
 
-            $user = MobileUser::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
+        $user = MobileUser::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
 
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
+        $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        $success['name'] = $user->name;
 
+        $code = rand(100000, 999999);
+        $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+        while ($tmp !== null) {
             $code = rand(100000, 999999);
             $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
-            while ($tmp !== null) {
-                $code = rand(100000, 999999);
-                $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
-            }
-
-            MobileEmailVerificationCode::create([
-                'accountVerificationCode' => $code,
-                'user_id' => $user['id'],
-            ]);
-
-            $mailData = [
-                'title' => 'Account Verification',
-                'body' => 'Your code is:',
-                'code' => $code
-            ];
-
-            Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
-
-            return response()->json([
-                'message' => 'User registered successfully',
-                'userWithToken' => $success
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => $e
-            ], 400);
         }
+
+        MobileEmailVerificationCode::create([
+            'accountVerificationCode' => $code,
+            'user_id' => $user['id'],
+        ]);
+
+        $mailData = [
+            'title' => 'Account Verification',
+            'body' => 'Your code is:',
+            'code' => $code
+        ];
+
+        Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
+
+        return response()->json([
+            'message' => 'User registered successfully',
+            'userWithToken' => $success
+        ], 200);
     }
 
     public function checkEmailVerificationCode(Request $request)
     {
         try {
             $code = $request->code;
-            $userCodeModel = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+            $email = $request->email;
 
-            if ($userCodeModel === null) {
+            $user = MobileUser::where('email', $email)->first();
+            $userCodeModel = $user->find($user['id'])->emailVerificationCode;
+
+            if ($userCodeModel === null || $userCodeModel['accountVerificationCode'] !== $code) {
                 return response()->json([
                     'message' => 'Wrong Verification Code'
                 ], 200);
             }
 
-            $userModel = MobileEmailVerificationCode::find($userCodeModel['id'])->user;
-            $userModel->verify = true;
-            $userModel->save();
+            $user->verify = true;
+            $user->save();
 
             $userCodeModel->delete();
 
@@ -134,23 +130,17 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            if (Auth::guard('mobile')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                $user = Auth::guard('mobile')->user();
-                $success['token'] = $user->createToken('MyApp')->plainTextToken;
-                $success['name'] = $user->name;
-                return response()->json([
-                    'message' => "User logged successfully",
-                    'success' => $success
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Unauthorised'
-                ], 400);
-            }
-        } catch (\Throwable $e) {
+        if (Auth::guard('mobile')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::guard('mobile')->user();
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['name'] = $user->name;
             return response()->json([
-                'message' => $e
+                'message' => "User logged successfully",
+                'success' => $success
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Unauthorised'
             ], 400);
         }
     }

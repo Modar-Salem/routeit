@@ -10,7 +10,7 @@ class Roadmap extends Model
     use HasFactory;
 
     protected $fillable = [
-        'expert_id','technology_level_id', 'title', 'title_ar', 'description', 'description_ar', 'cover',
+        'expert_id','technology_level_id', 'technology_id', 'title', 'title_ar', 'description', 'description_ar', 'cover',
         'introductory_video', 'target_cv',
     ];
 
