@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('article_sections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('article_id')->constrained('roadmap_skill_articles') ;
-            $table->string('title')  ;
-            $table->string('content') ;
+            $table->string('title');
+            $table->text('content');
             $table->string('image')->nullable() ;
             $table->timestamps();
         });

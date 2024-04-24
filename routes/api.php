@@ -34,4 +34,7 @@ Route::middleware('auth:sanctum')->group( function () {
     /* Roadmaps Controller*/
     Route::get('getRoadmaps', [RoadmapsController::class, 'getRoadmaps']);
     Route::get('getRoadmapSkills', [RoadmapsController::class, 'getRoadmapSkills']);
+    Route::get('getSkillVideos', [RoadmapsController::class, 'getSkillVideos']);
+    Route::get('getSkillArticles' , [RoadmapsController::class, 'getSkillArticles']);
+    Route::get('getArticleSections', [RoadmapsController::class, 'getArticleSections']);
 });

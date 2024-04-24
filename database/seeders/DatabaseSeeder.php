@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             ExpertsSeeder::class,
             RoadmapsSeeder::class,
             RoadmapSkillsSeeder::class,
+            RoadmapSkillVideosSeeder::class,
+            RoadmapSkillArticlesSeeder::class,
+            ArticleSectionsSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
