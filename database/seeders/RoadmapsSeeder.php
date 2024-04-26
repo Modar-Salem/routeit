@@ -16,7 +16,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 1,
-            'technology_id' => 1,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -27,7 +26,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 1,
-            'technology_id' => 1,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',
@@ -38,7 +36,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 2,
-            'technology_id' => 5,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -49,7 +46,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 2,
-            'technology_id' => 5,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',
@@ -60,7 +56,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 3,
-            'technology_id' => 3,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -71,7 +66,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 1,
             'technology_level_id' => 3,
-            'technology_id' => 3,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',
@@ -84,7 +78,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 1,
-            'technology_id' => 2,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -95,7 +88,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 1,
-            'technology_id' => 2,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',
@@ -106,7 +98,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 2,
-            'technology_id' => 6,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -117,7 +108,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 2,
-            'technology_id' => 6,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',
@@ -128,7 +118,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 3,
-            'technology_id' => 6,
             'title' => 'Roadmap title',
             'title_ar' => 'عنوان خارطة الطريق',
             'description' => 'Roadmap Basics A roadmap is a strategic plan that defines a goal or desired outcome and includes the major steps or milestones needed to reach it. It also serves as a communication tool, a high-level document that helps articulate strategic thinking—the why—behind both the goal and the plan for getting there.',
@@ -139,7 +128,6 @@ class RoadmapsSeeder extends Seeder
         Roadmap::create([
             'expert_id' => 2,
             'technology_level_id' => 3,
-            'technology_id' => 6,
             'title' => 'Another Roadmap',
             'title_ar' => 'عنوان خارطة أخر',
             'description' => 'Every team has a plan and strategy built around doing what pushes the business goals forward. When you’re busy executing the strategy, you can get lost in day-to-day task management. A roadmap is one of the most effective tools for rising above the granular details and chaos. Roadmaps give you a bird-eye view of everything that’s happening at your team or company.',

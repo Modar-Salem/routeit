@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('verify')->default(false);
+            $table->boolean('completed')->default(false);
             $table->string('name');
             $table->string('image')->nullable();
             $table->date('birth_date')->nullable();

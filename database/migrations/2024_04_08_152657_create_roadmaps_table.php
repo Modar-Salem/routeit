@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('expert_id')->constrained('experts');
             $table->foreignId('technology_level_id')->constrained('technology_levels');
-            $table->foreignId('technology_id')->constrained('technologies');
             $table->string('title');
             $table->string('title_ar');
             $table->text('description');

@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Roadmap;
 use App\Models\RoadmapSkill;
 use App\Models\RoadmapSkillArticle;
+use App\Models\TechnologyLevel;
 use Illuminate\Http\Request;
 
 class RoadmapsController extends Controller
 {
     public function getRoadmaps(Request $request)
     {
-        $roadmaps = Roadmap::where('technology_id', $request->technology_id)->where('technology_level_id', $request->technology_level_id)->get();
+        $roadmaps = TechnologyLevel::find($request->technology_level_id)->roadmaps;
 
         return response()->json([
             'message' => 'Success',

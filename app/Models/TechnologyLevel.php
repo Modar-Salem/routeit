@@ -13,4 +13,8 @@ class TechnologyLevel extends Model
     public function technology() {
         return $this->belongsTo(Technology::class);
     }
+
+    public function roadmaps() {
+        return $this->hasMany(Roadmap::class);
+    }
 }

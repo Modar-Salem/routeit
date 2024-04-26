@@ -15,7 +15,7 @@ class MobileUser extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'email', 'password', 'verify', 'name', 'image', 'birth_date',
+        'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
         'it_student', 'university', 'bio',
     ];
 

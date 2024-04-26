@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\api\EmailVerificationMail;
 use App\Models\MobileEmailVerificationCode;
 use App\Models\MobileUser;
+use http\Env\Response;
 use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,21 +18,27 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $request->validate([
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'name' => ['required', 'max:250'],
             'email' => ['required', 'email', 'unique:mobile_users', 'max:250'],
             'password' => ['required', 'max:250'],
             'password_confirmation' => ['required', 'same:password']
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => "There is something incorrect",
+                'errors' => $validator->errors()
+            ]);
+        }
+
         $user = MobileUser::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-
-        $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['name'] = $user->name;
 
         $code = rand(100000, 999999);
         $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
@@ -54,39 +61,32 @@ class AuthController extends Controller
         Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
 
         return response()->json([
-            'message' => 'User registered successfully',
-            'userWithToken' => $success
+            'message' => 'Account created successfully. Check your email for verification code',
         ], 200);
     }
 
     public function checkEmailVerificationCode(Request $request)
     {
-        try {
-            $code = $request->code;
-            $email = $request->email;
+        $code = $request->code;
+        $email = $request->email;
 
-            $user = MobileUser::where('email', $email)->first();
-            $userCodeModel = $user->find($user['id'])->emailVerificationCode;
+        $user = MobileUser::where('email', $email)->first();
+        $userCodeModel = $user->find($user['id'])->emailVerificationCode;
 
-            if ($userCodeModel === null || $userCodeModel['accountVerificationCode'] !== $code) {
-                return response()->json([
-                    'message' => 'Wrong Verification Code'
-                ], 200);
-            }
-
-            $user->verify = true;
-            $user->save();
-
-            $userCodeModel->delete();
-
+        if ($userCodeModel === null || $userCodeModel['accountVerificationCode'] !== $code) {
             return response()->json([
-                'message' => 'Correct Verification Code'
+                'message' => 'Wrong Verification Code'
             ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => $e
-            ], 400);
         }
+
+        $user->verify = true;
+        $user->save();
+
+        $userCodeModel->delete();
+
+        return response()->json([
+            'message' => 'Correct Verification Code'
+        ], 200);
     }
 
     public function completeRegister(Request $request)
@@ -119,12 +119,16 @@ class AuthController extends Controller
             'birth_date' => $data['birth_date'],
             'it_student' => $data['it_student'],
             'university' => $data['university'],
-            'bio' => $data['bio']
+            'bio' => $data['bio'],
+            'completed' => true,
         ]);
 
+        $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        $success['name'] = $user->name;
+
         return response()->json([
-            'message' => "Register completed successfully",
-            'User Info' => $user
+            'message' => 'User registered successfully',
+            'userWithToken' => $success
         ], 200);
     }
 
@@ -132,6 +136,44 @@ class AuthController extends Controller
     {
         if (Auth::guard('mobile')->attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::guard('mobile')->user();
+
+            if (!$user['verify']) {
+                $emailVerificationModel = MobileUser::find($user['id'])->emailVerificationCode;
+                if($emailVerificationModel !== null) {
+                    $emailVerificationModel->delete();
+                }
+
+                $code = rand(100000, 999999);
+                $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+                while ($tmp !== null) {
+                    $code = rand(100000, 999999);
+                    $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+                }
+
+                MobileEmailVerificationCode::create([
+                    'accountVerificationCode' => $code,
+                    'user_id' => $user['id'],
+                ]);
+
+                $mailData = [
+                    'title' => 'Account Verification',
+                    'body' => 'Your code is:',
+                    'code' => $code
+                ];
+
+                Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
+
+                return response()->json([
+                    'message' => 'Your account is not verified. Check your email for verification code'
+                ], 200);
+            }
+
+            if (!$user['completed']) {
+                return response()->json([
+                    'message' => 'You should complete your account information'
+                ], 200);
+            }
+
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
             $success['name'] = $user->name;
             return response()->json([
@@ -140,7 +182,7 @@ class AuthController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Unauthorised'
+                'message' => 'Your email or password is not correct'
             ], 400);
         }
     }
