@@ -15,7 +15,7 @@ class MobileUser extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'email', 'password', 'verify', 'name', 'image', 'birth_date',
+        'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
         'it_student', 'university', 'bio',
     ];
 
@@ -30,7 +30,12 @@ class MobileUser extends Authenticatable
 
     public function emailVerificationCode()
     {
-        return $this->hasOne(MobileEmailVerificationCode::class);
+        return $this->hasOne(MobileEmailVerificationCode::class, 'user_id');
+    }
+
+    public function resetPasswordCode()
+    {
+        return $this->hasOne(MobileResetPasswordCode::class, 'user_id');
     }
 
     // Assuming MobileUser can have multiple technologies through tests

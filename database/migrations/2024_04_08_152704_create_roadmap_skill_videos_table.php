@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
             $table->string('title');
-            $table->string('video'); // Assuming this is a file path or URL
+            /* nullable temporary */
+            $table->string('video')->nullable(); // Assuming this is a file path or URL
             $table->timestamps();
         });
     }

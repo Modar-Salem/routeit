@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('roadmaps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('expert_id')->constrained('experts');
-            $table->foreignId('technology_level_id')->constrained('technology_levels') ;
+            $table->foreignId('technology_level_id')->constrained('technology_levels');
             $table->string('title');
             $table->string('title_ar');
             $table->text('description');
             $table->text('description_ar');
             $table->string('cover');
-            $table->string('introductory_video');
-            $table->string('target_cv'); //file
+            /* nullable temporary */
+            $table->string('introductory_video')->nullable();
+            $table->string('target_cv')->nullable(); //file
             $table->timestamps();
         });
     }

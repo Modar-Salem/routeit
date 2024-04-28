@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_sections', function (Blueprint $table) {
+        Schema::create('mobile_reset_password_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->constrained('roadmap_skill_articles') ;
-            $table->string('title');
-            $table->text('content');
-            $table->string('image')->nullable() ;
+            $table->integer('resetPasswordCode')->default(null);
+            $table->foreignId('user_id')->constrained('mobile_users');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_sections');
+        Schema::dropIfExists('mobile_reset_password_codes');
     }
 };

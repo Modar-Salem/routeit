@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\TechnologyLevel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,13 @@ class DatabaseSeeder extends Seeder
             MobileUserSeeder::class,
             TechnologyCategoriesSeeder::class,
             TechnologiesSeeder::class,
+            TechnologyLevelsSeeder::class,
+            ExpertsSeeder::class,
+            RoadmapsSeeder::class,
+            RoadmapSkillsSeeder::class,
+            RoadmapSkillVideosSeeder::class,
+            RoadmapSkillArticlesSeeder::class,
+            ArticleSectionsSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
