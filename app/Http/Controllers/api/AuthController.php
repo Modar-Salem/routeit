@@ -21,7 +21,7 @@ class AuthController extends Controller
         $data = $request->all();
         $validator = Validator::make($data, [
             'name' => ['required', 'max:250'],
-            'email' => ['required', 'email', 'unique:mobile_users', 'max:250'],
+            'email' => ['required', 'email', 'max:250'],
             'password' => ['required', 'max:250'],
             'password_confirmation' => ['required', 'same:password']
         ]);
@@ -34,49 +34,69 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = MobileUser::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
+        $user = MobileUser::where('email', $data['email'])->first();
 
-        $code = rand(100000, 999999);
-        $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
-        while ($tmp !== null) {
+        if ($user === null || !$user['verify'] || !$user['completed']) {
+            if ($user !== null) {
+                $emailVerificationModel = MobileUser::find($user['id'])->emailVerificationCode;
+                if ($emailVerificationModel !== null) {
+                    $emailVerificationModel->delete();
+                }
+
+                $user->delete();
+            }
+
+            $user = MobileUser::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+
             $code = rand(100000, 999999);
             $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+            while ($tmp !== null) {
+                $code = rand(100000, 999999);
+                $tmp = MobileEmailVerificationCode::where('accountVerificationCode', $code)->first();
+            }
+
+            MobileEmailVerificationCode::create([
+                'accountVerificationCode' => $code,
+                'user_id' => $user['id'],
+            ]);
+
+            $mailData = [
+                'title' => 'Account Verification',
+                'body' => 'Your code is:',
+                'code' => $code
+            ];
+
+            Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
+
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['name'] = $user->name;
+
+            return response()->json([
+                'message' => 'User registered successfully',
+                'userWithToken' => $success
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'You already have an account. Please login.',
+            ], 409);
         }
-
-        MobileEmailVerificationCode::create([
-            'accountVerificationCode' => $code,
-            'user_id' => $user['id'],
-        ]);
-
-        $mailData = [
-            'title' => 'Account Verification',
-            'body' => 'Your code is:',
-            'code' => $code
-        ];
-
-        Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
-
-        return response()->json([
-            'message' => 'Account created successfully. Check your email for verification code',
-        ], 200);
     }
 
     public function checkEmailVerificationCode(Request $request)
     {
+        $user = $request->user();
         $code = $request->code;
-        $email = $request->email;
 
-        $user = MobileUser::where('email', $email)->first();
         $userCodeModel = $user->find($user['id'])->emailVerificationCode;
 
         if ($userCodeModel === null || $userCodeModel['accountVerificationCode'] !== $code) {
             return response()->json([
                 'message' => 'Wrong Verification Code'
-            ], 200);
+            ], 422);
         }
 
         $user->verify = true;
@@ -113,7 +133,7 @@ class AuthController extends Controller
         $imageName = time() . '.' . $ext;
         $image->move(public_path() . '/images/API_Images/profilePhotos/', $imageName);
 
-        $user = MobileUser::where('email', $data['email'])->first();
+        $user = $request->user();
         $user->update([
             'image' => $imageName,
             'birth_date' => $data['birth_date'],
@@ -123,12 +143,8 @@ class AuthController extends Controller
             'completed' => true,
         ]);
 
-        $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['name'] = $user->name;
-
         return response()->json([
-            'message' => 'User registered successfully',
-            'userWithToken' => $success
+            'message' => 'User have completed the registration successfully',
         ], 200);
     }
 
@@ -136,10 +152,12 @@ class AuthController extends Controller
     {
         if (Auth::guard('mobile')->attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::guard('mobile')->user();
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['name'] = $user->name;
 
-            if (!$user['verify']) {
+            if (!$user['verify'] || !$user['completed']) {
                 $emailVerificationModel = MobileUser::find($user['id'])->emailVerificationCode;
-                if($emailVerificationModel !== null) {
+                if ($emailVerificationModel !== null) {
                     $emailVerificationModel->delete();
                 }
 
@@ -163,27 +181,30 @@ class AuthController extends Controller
 
                 Mail::to($user['email'])->send(new EmailVerificationMail($mailData));
 
+                if (!$user['verify']) {
+                    $success['message'] = 'Your account is not verified. Check your email for verification code.';
+
+                    return response()->json([
+                        'data' => $success
+                    ], 403);
+                } else {
+                    $success['message'] = 'You should complete your account information';
+
+                    return response()->json([
+                        'data' => $success
+                    ], 422);
+                }
+            } else {
+                $success['message'] = 'User logged in successfully';
+
                 return response()->json([
-                    'message' => 'Your account is not verified. Check your email for verification code'
+                    'data' => $success,
                 ], 200);
             }
-
-            if (!$user['completed']) {
-                return response()->json([
-                    'message' => 'You should complete your account information'
-                ], 200);
-            }
-
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
-            return response()->json([
-                'message' => "User logged successfully",
-                'success' => $success
-            ], 200);
         } else {
             return response()->json([
                 'message' => 'Your email or password is not correct'
-            ], 400);
+            ], 401);
         }
     }
 
@@ -199,5 +220,10 @@ class AuthController extends Controller
                 'message' => $e
             ], 400);
         }
+    }
+
+    public function forgetPassword(Request $request)
+    {
+        return "OK";
     }
 }

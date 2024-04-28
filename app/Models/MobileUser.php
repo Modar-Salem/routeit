@@ -33,6 +33,11 @@ class MobileUser extends Authenticatable
         return $this->hasOne(MobileEmailVerificationCode::class, 'user_id');
     }
 
+    public function resetPasswordCode()
+    {
+        return $this->hasOne(MobileResetPasswordCode::class, 'user_id');
+    }
+
     // Assuming MobileUser can have multiple technologies through tests
     public function technologies()
     {

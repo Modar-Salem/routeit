@@ -20,21 +20,25 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
-    Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
-    Route::post('completeRegister', 'completeRegister');
+    Route::post('forgetPassword', 'forgetPassword');
 });
 
-Route::middleware('auth:sanctum')->group( function () {
-    /* Auth Controller */
-    Route::post('logout', [AuthController::class, 'logout']);
-    /* TechnologyCategories Controller */
-    Route::get('getTechnologyCategories', [TechnologyCategoriesController::class, 'getTechnologyCategories']);
-    Route::get('getTechnologies', [TechnologyCategoriesController::class, 'getTechnologies']);
-    Route::get('getTechnologyLevels', [TechnologyCategoriesController::class, 'getTechnologyLevels']);
-    /* Roadmaps Controller*/
-    Route::get('getRoadmaps', [RoadmapsController::class, 'getRoadmaps']);
-    Route::get('getRoadmapSkills', [RoadmapsController::class, 'getRoadmapSkills']);
-    Route::get('getSkillVideos', [RoadmapsController::class, 'getSkillVideos']);
-    Route::get('getSkillArticles' , [RoadmapsController::class, 'getSkillArticles']);
-    Route::get('getArticleSections', [RoadmapsController::class, 'getArticleSections']);
+Route::controller(AuthController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
+    Route::post('completeRegister', 'completeRegister');
+    Route::post('logout','logout');
+});
+
+Route::controller(TechnologyCategoriesController::class)->middleware('auth:sanctum')->group(function () {
+    Route::get('getTechnologyCategories','getTechnologyCategories');
+    Route::get('getTechnologies', 'getTechnologies');
+    Route::get('getTechnologyLevels', 'getTechnologyLevels');
+});
+
+Route::controller(RoadmapsController::class)->middleware('auth:sanctum')->group(function () {
+    Route::get('getRoadmaps', 'getRoadmaps');
+    Route::get('getRoadmapSkills', 'getRoadmapSkills');
+    Route::get('getSkillVideos', 'getSkillVideos');
+    Route::get('getSkillArticles' , 'getSkillArticles');
+    Route::get('getArticleSections', 'getArticleSections');
 });
