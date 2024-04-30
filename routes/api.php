@@ -17,28 +17,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function(){
+Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('forgetPassword', 'forgetPassword');
+    Route::post('checkResetPasswordCode', 'checkResetPasswordCode');
+    Route::post('resetPassword', 'resetPassword');
 });
 
-Route::controller(AuthController::class)->middleware('auth:sanctum')->group(function () {
+Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
     Route::post('completeRegister', 'completeRegister');
-    Route::post('logout','logout');
+    Route::post('logout', 'logout');
 });
 
-Route::controller(TechnologyCategoriesController::class)->middleware('auth:sanctum')->group(function () {
-    Route::get('getTechnologyCategories','getTechnologyCategories');
+Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
     Route::get('getTechnologyLevels', 'getTechnologyLevels');
 });
 
-Route::controller(RoadmapsController::class)->middleware('auth:sanctum')->group(function () {
+Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getRoadmaps', 'getRoadmaps');
     Route::get('getRoadmapSkills', 'getRoadmapSkills');
     Route::get('getSkillVideos', 'getSkillVideos');
-    Route::get('getSkillArticles' , 'getSkillArticles');
+    Route::get('getSkillArticles', 'getSkillArticles');
     Route::get('getArticleSections', 'getArticleSections');
 });
