@@ -8,19 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class RoadmapSkill extends Model
 {
     use HasFactory;
+
     protected $fillable = ['roadmap_id', 'title'];
 
-    public function roadmap() {
+    public function roadmap()
+    {
         return $this->belongsTo(Roadmap::class);
     }
 
     // Relation with RoadmapSkillVideo
-    public function videos() {
+    public function videos()
+    {
         return $this->hasMany(RoadmapSkillVideo::class);
     }
 
     // Relation with RoadmapSkillArticle
-    public function articles() {
+    public function articles()
+    {
         return $this->hasMany(RoadmapSkillArticle::class);
+    }
+
+    public function test()
+    {
+        return $this->hasOne(Test::class);
+    }
+
+    public function mobileUserComments()
+    {
+        return $this->belongsToMany(MobileUser::class, 'skill_comments');
     }
 }

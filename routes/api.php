@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
+use App\Http\Controllers\api\TestController;
+use App\Http\Controllers\api\TestQuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +38,10 @@ Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedA
     Route::post('logout', 'logout');
 });
 
+Route::controller(MobileUserController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::put('editProfile', 'editProfile');
+});
+
 Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
@@ -46,4 +54,19 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
     Route::get('getSkillVideos', 'getSkillVideos');
     Route::get('getSkillArticles', 'getSkillArticles');
     Route::get('getArticleSections', 'getArticleSections');
+});
+
+Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTest', 'getTest');
+    Route::post('getTestResult', 'getTestResult');
+});
+
+Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTestQuestions', 'getTestQuestions');
+});
+
+Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getSkillComments', 'getSkillComments');
+    Route::post('addSkillComment', 'addSkillComment');
+    Route::put('editSkillComment', 'editSkillComment');
 });
