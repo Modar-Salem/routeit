@@ -25,9 +25,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('resetPassword', 'resetPassword');
 });
 
-Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+Route::controller(AuthController::class)->middleware(['auth:sanctum'])->group(function () {
     Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
     Route::post('completeRegister', 'completeRegister');
+});
+
+Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::post('logout', 'logout');
 });
 
