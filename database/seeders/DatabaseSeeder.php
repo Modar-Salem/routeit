@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             ArticleSectionsSeeder::class,
             TestsSeeder::class,
             TestQuestionsSeeder::class,
-            SkillCommentsSeeder::class
+            SkillCommentsSeeder::class,
+            CommentRepliesSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

@@ -48,4 +48,9 @@ class MobileUser extends Authenticatable
     {
         return $this->belongsToMany(RoadmapSkill::class, 'skill_comments');
     }
+
+    public function commentReplies()
+    {
+        return $this->belongsToMany(SkillComment::class, 'comment_replies');
+    }
 }

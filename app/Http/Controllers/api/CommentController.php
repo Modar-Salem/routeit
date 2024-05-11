@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    public function getSkillComments(Request $request)
+    public function get(Request $request)
     {
         $roadmap_skill_id = $request['roadmap_skill_id'];
         $comments = SkillComment::where('roadmap_skill_id', $roadmap_skill_id)->get();
@@ -21,7 +21,7 @@ class CommentController extends Controller
         ], 200);
     }
 
-    public function addSkillComment(Request $request)
+    public function add(Request $request)
     {
         $data = $request->all();
 
@@ -51,7 +51,7 @@ class CommentController extends Controller
         ], 200);
     }
 
-    public function editSkillComment(Request $request)
+    public function edit(Request $request)
     {
         $data = $request->all();
 
@@ -85,5 +85,10 @@ class CommentController extends Controller
             'status' => 'success',
             'message' => 'Comment updated successfully'
         ], 200);
+    }
+
+    public function delete(Request $request)
+    {
+        return "OK";
     }
 }

@@ -33,7 +33,7 @@ class RoadmapSkill extends Model
         return $this->hasOne(Test::class);
     }
 
-    public function mobileUserComments()
+    public function mobileUsersHaveComments()
     {
         return $this->belongsToMany(MobileUser::class, 'skill_comments');
     }

@@ -11,4 +11,8 @@ class SkillComment extends Model
 
     protected $table = 'skill_comments';
     protected $fillable = ['mobile_user_id', 'roadmap_skill_id', 'comment'];
+
+    public function mobileUsersHaveReplies() {
+        return $this->belongsToMany(MobileUser::class, 'comment_replies');
+    }
 }

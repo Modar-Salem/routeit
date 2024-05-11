@@ -65,8 +65,9 @@ Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'v
     Route::get('getTestQuestions', 'getTestQuestions');
 });
 
-Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
-    Route::get('getSkillComments', 'getSkillComments');
-    Route::post('addSkillComment', 'addSkillComment');
-    Route::put('editSkillComment', 'editSkillComment');
+Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('skillComment')->group(function () {
+    Route::get('get', 'get');
+    Route::post('add', 'add');
+    Route::put('edit', 'edit');
+    Route::delete('delete', 'delete');
 });
