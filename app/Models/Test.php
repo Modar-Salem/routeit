@@ -26,4 +26,9 @@ class Test extends Model
     {
         return $this->belongsTo(RoadmapSkill::class);
     }
+
+    public function usersPassed()
+    {
+        return $this->belongsToMany(MobileUser::class, 'user_passed_tests');
+    }
 }

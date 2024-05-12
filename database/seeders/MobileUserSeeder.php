@@ -22,6 +22,8 @@ class MobileUserSeeder extends Seeder
             'it_student' => true,
             'university' => 'Damascuse University',
             'bio' => 'No bio needed',
+            'verify' => true,
+            'completed' => true
         ]);
         MobileUser::create([
             'email' => 'wassim2@gmail.com',

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\CommentReply;
 use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
@@ -58,7 +59,7 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
 
 Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getTest', 'getTest');
-    Route::post('getTestResult', 'getTestResult');
+    Route::post('saveTestResult', 'saveTestResult');
 });
 
 Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -70,4 +71,8 @@ Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifi
     Route::post('add', 'add');
     Route::put('edit', 'edit');
     Route::delete('delete', 'delete');
+});
+
+Route::controller(CommentReply::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('commentReply')->group(function () {
+    Route::get('get', 'get');
 });

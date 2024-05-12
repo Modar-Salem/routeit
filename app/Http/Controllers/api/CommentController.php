@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\CommentReply;
 use App\Models\RoadmapSkill;
 use App\Models\SkillComment;
 use Illuminate\Http\Request;
@@ -89,6 +90,24 @@ class CommentController extends Controller
 
     public function delete(Request $request)
     {
-        return "OK";
+        $comment = SkillComment::where('id', $request['comment_id'])->first();
+        $user = $request->user();
+
+        if ($comment['mobile_user_id'] !== $user['id']) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This comment does not belong to the logged in user.'
+            ], 403);
+        }
+
+        $replies = CommentReply::where('skill_comments_id', $comment['id'])->get();
+
+        $replies->each->delete();
+        $comment->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Comment and its replies deleted successfully'
+        ], 200);
     }
 }
