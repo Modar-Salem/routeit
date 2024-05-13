@@ -43,4 +43,19 @@ class MobileUser extends Authenticatable
     {
         return $this->hasManyThrough(Technology::class, Test::class);
     }
+
+    public function skillComments()
+    {
+        return $this->belongsToMany(RoadmapSkill::class, 'skill_comments');
+    }
+
+    public function commentReplies()
+    {
+        return $this->belongsToMany(SkillComment::class, 'comment_replies');
+    }
+
+    public function passedTests()
+    {
+        return $this->belongsToMany(Test::class, 'user_passed_tests');
+    }
 }

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,6 +13,7 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('technology_id')->constrained('technologies');
+            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
             $table->integer('total_xp');
             $table->timestamps();
         });
