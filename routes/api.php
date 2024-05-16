@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\UserSkillCommentController;
 use App\Http\Controllers\api\CommentReply;
 use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
@@ -58,7 +58,6 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
 });
 
 Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
-    Route::get('getTest', 'getTest');
     Route::post('saveTestResult', 'saveTestResult');
 });
 
@@ -66,7 +65,7 @@ Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'v
     Route::get('getTestQuestions', 'getTestQuestions');
 });
 
-Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('skillComment')->group(function () {
+Route::controller(UserSkillCommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('userSkillComment')->group(function () {
     Route::get('get', 'get');
     Route::post('add', 'add');
     Route::put('edit', 'edit');

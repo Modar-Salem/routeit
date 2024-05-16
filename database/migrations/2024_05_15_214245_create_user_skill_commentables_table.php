@@ -10,11 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('skill_comments', function (Blueprint $table) {
+        Schema::create('user_skill_commentables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mobile_user_id')->constrained('mobile_users');
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
-            $table->text('comment');
+            $table->foreignId('user_skill_comment_id')->constrained('user_skill_comments');
+            $table->integer('user_skill_commentables_id');
+            $table->string('user_skill_commentables_type');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('skill_comments');
+        Schema::dropIfExists('user_skill_commentables');
     }
 };
