@@ -44,6 +44,11 @@ class MobileUser extends Authenticatable
         return $this->hasManyThrough(Technology::class, Test::class);
     }
 
+    public function comments()
+    {
+        return $this->morphToMany(UserSkillComment::class, 'user_skill_commentables');
+    }
+
     public function skillComments()
     {
         return $this->belongsToMany(RoadmapSkill::class, 'skill_comments');
@@ -51,7 +56,7 @@ class MobileUser extends Authenticatable
 
     public function commentReplies()
     {
-        return $this->belongsToMany(SkillComment::class, 'comment_replies');
+        return $this->morphToMany(UserCommentReply::class, 'user_comment_repliesables');
     }
 
     public function passedTests()

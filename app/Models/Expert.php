@@ -8,13 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Expert  extends Authenticatable
+class Expert extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = ['name','email','password','image','bio','type'] ;
 
-    public function roadmaps() {
+    public function roadmaps()
+    {
         return $this->hasMany(Roadmap::class, 'expert_id');
     }
 
