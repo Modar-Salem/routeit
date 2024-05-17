@@ -21,9 +21,4 @@ class UserSkillComment extends Model
     {
         return $this->morphedByMany(Expert::class, 'user_skill_commentables');
     }
-
-    public function mobileUsersHaveReplies()
-    {
-        return $this->belongsToMany(MobileUser::class, 'comment_replies');
-    }
 }

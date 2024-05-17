@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\UserCommentReplyController;
 use App\Http\Controllers\api\UserSkillCommentController;
-use App\Http\Controllers\api\CommentReply;
 use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
@@ -72,6 +72,9 @@ Route::controller(UserSkillCommentController::class)->middleware(['auth:sanctum'
     Route::delete('delete', 'delete');
 });
 
-Route::controller(CommentReply::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('commentReply')->group(function () {
+Route::controller(UserCommentReplyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('userCommentReply')->group(function () {
     Route::get('get', 'get');
+    Route::post('add', 'add');
+    Route::put('edit', 'edit');
+    Route::delete('delete', 'delete');
 });

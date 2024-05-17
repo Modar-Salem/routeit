@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CommentReply;
 use App\Models\Expert;
 use App\Models\MobileUser;
 use App\Models\RoadmapSkill;
+use App\Models\UserCommentReply;
 use App\Models\UserSkillComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,19 +26,17 @@ class UserSkillCommentController extends Controller
             if ($comment->user_skill_commentables_type === "App\Models\MobileUser") {
                 $user = MobileUser::find($comment->user_skill_commentables_id);
                 $comment->mobile_user_id = $user['id'];
-                $comment->name = $user['name'];
-                $comment->image = $user['image'];
                 $comment->birth_date = $user['birth_date'];
                 $comment->it_student = $user['it_student'];
                 $comment->university = $user['university'];
-                $comment->bio = $user['bio'];
+
             } else {
                 $user = Expert::find($comment->user_skill_commentables_id);
                 $comment->expert_id = $user['id'];
-                $comment->name = $user['name'];
-                $comment->image = $user['image'];
-                $comment->bio = $user['bio'];
             }
+            $comment->name = $user['name'];
+            $comment->image = $user['image'];
+            $comment->bio = $user['bio'];
 
             unset($comment->user_skill_comment_id);
             unset($comment->user_skill_commentables_id);
@@ -130,11 +128,14 @@ class UserSkillCommentController extends Controller
             ], 403);
         }
 
-        $replies = CommentReply::where('skill_comments_id', $comment['id'])->get();
+        $replies = UserCommentReply::where('skill_comment_id', $comment['id'])->get();
+
+        foreach ($replies as $reply) {
+            DB::table('user_comment_repliesables')->where('user_comment_reply_id', '=', $reply['id'])->delete();
+
+        }
         $replies->each->delete();
-
-        DB::table('user_skill_commentables')->where('user_skill_comment_id', '=', $request['comment_id'] )->delete();
-
+        DB::table('user_skill_commentables')->where('user_skill_comment_id', '=', $request['comment_id'])->delete();
         $comment->delete();
 
         return response()->json([

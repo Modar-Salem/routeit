@@ -49,6 +49,11 @@ class MobileUser extends Authenticatable
         return $this->morphToMany(UserSkillComment::class, 'user_skill_commentables');
     }
 
+    public function commentReplies()
+    {
+        return $this->morphToMany(UserCommentReply::class, 'user_comment_repliesables');
+    }
+
     public function passedTests()
     {
         return $this->belongsToMany(Test::class, 'user_passed_tests');
