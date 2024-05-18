@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\RoadmapUsersRankingController;
 use App\Http\Controllers\api\UserCommentReplyController;
 use App\Http\Controllers\api\UserSkillCommentController;
 use App\Http\Controllers\api\MobileUserController;
@@ -77,4 +78,8 @@ Route::controller(UserCommentReplyController::class)->middleware(['auth:sanctum'
     Route::post('add', 'add');
     Route::put('edit', 'edit');
     Route::delete('delete', 'delete');
+});
+
+Route::controller(RoadmapUsersRankingController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getRoadmapRanking', 'getRoadmapRanking');
 });

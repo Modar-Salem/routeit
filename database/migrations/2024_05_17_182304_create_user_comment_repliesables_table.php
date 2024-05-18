@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('user_comment_repliesables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_comment_reply_id')->constrained('user_comment_replies');
+            $table->foreignId('user_comment_reply_id')->constrained('user_comment_replies')->onDelete('cascade');
             $table->integer('user_comment_repliesables_id');
             $table->string('user_comment_repliesables_type');
             $table->timestamps();

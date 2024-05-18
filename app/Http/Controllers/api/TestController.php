@@ -28,6 +28,18 @@ class TestController extends Controller
             'isPassed' => true
         ]);
 
+        $test = Test::find($request['test_id']);
+        $skill = $test->roadmapSkill;
+        $roadmap = $skill->roadmap;
+        $roadmapUserRanking = $user->roadmapsUserRanking->find($roadmap['id']);
+
+        if ($roadmapUserRanking === null) {
+            $user->roadmapsUserRanking()->attach($roadmap['id']);
+            $roadmapUserRanking = $user->roadmapsUserRanking()->find($roadmap['id']);
+        }
+        $roadmapUserRanking->pivot->userXP += $test['total_xp'];
+        $roadmapUserRanking->pivot->save();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Test result saved successfully.'

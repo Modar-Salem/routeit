@@ -16,7 +16,7 @@ class MobileUser extends Authenticatable
 
     protected $fillable = [
         'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
-        'it_student', 'university', 'bio',
+        'it_student', 'university', 'bio', 'userXP'
     ];
 
     protected $hidden = [
@@ -57,5 +57,11 @@ class MobileUser extends Authenticatable
     public function passedTests()
     {
         return $this->belongsToMany(Test::class, 'user_passed_tests');
+    }
+
+    public function roadmapsUserRanking()
+    {
+        return $this->belongsToMany(Roadmap::class, 'roadmap_users_rankings')
+            ->withPivot(['userXP']);
     }
 }

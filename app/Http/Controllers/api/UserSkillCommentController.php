@@ -128,14 +128,6 @@ class UserSkillCommentController extends Controller
             ], 403);
         }
 
-        $replies = UserCommentReply::where('skill_comment_id', $comment['id'])->get();
-
-        foreach ($replies as $reply) {
-            DB::table('user_comment_repliesables')->where('user_comment_reply_id', '=', $reply['id'])->delete();
-
-        }
-        $replies->each->delete();
-        DB::table('user_skill_commentables')->where('user_skill_comment_id', '=', $request['comment_id'])->delete();
         $comment->delete();
 
         return response()->json([

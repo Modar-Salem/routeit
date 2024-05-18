@@ -122,7 +122,6 @@ class UserCommentReplyController extends Controller
             ], 403);
         }
 
-        DB::table('user_comment_repliesables')->where('user_comment_reply_id', '=', $request['reply_id'])->delete();
         $reply->delete();
 
         return response()->json([

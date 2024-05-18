@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             TestsSeeder::class,
             TestQuestionsSeeder::class,
             UserSkillCommentsSeeder::class,
-            UserCommentRepliesSeeder::class
+            UserCommentRepliesSeeder::class,
+            RoadmapUserRankingSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
