@@ -37,4 +37,9 @@ class Expert extends Authenticatable
     {
         return $this->morphToMany(UserCommentReply::class, 'user_comment_repliesables');
     }
+
+    public function followingUsers()
+    {
+        return $this->belongsToMany(MobileUser::class, 'users_followed_experts');
+    }
 }

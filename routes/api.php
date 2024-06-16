@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\ExpertController;
 use App\Http\Controllers\api\RoadmapUsersRankingController;
 use App\Http\Controllers\api\UserCommentReplyController;
+use App\Http\Controllers\api\UserFollowedExpertController;
+use App\Http\Controllers\api\UserFollowedTechnologyController;
 use App\Http\Controllers\api\UserSkillCommentController;
 use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
@@ -41,13 +44,30 @@ Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedA
 });
 
 Route::controller(MobileUserController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getStudentProfile', 'getStudentProfile');
     Route::put('editProfile', 'editProfile');
+});
+
+Route::controller(ExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getExpertProfile', 'getExpertProfile');
+});
+
+Route::controller(UserFollowedExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('showFollowedExperts', 'showFollowedExperts');
+    Route::post('followExpert', 'followExpert');
+    Route::delete('unfollowExpert', 'unfollowExpert');
 });
 
 Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
     Route::get('getTechnologyLevels', 'getTechnologyLevels');
+});
+
+Route::controller(UserFollowedTechnologyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('showFollowedTechnologies', 'showFollowedTechnologies');
+    Route::post('followTechnology', 'followTechnology');
+    Route::delete('unfollowTechnology', 'unfollowTechnology');
 });
 
 Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -82,4 +102,5 @@ Route::controller(UserCommentReplyController::class)->middleware(['auth:sanctum'
 
 Route::controller(RoadmapUsersRankingController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getRoadmapRanking', 'getRoadmapRanking');
+    Route::get('test', 'test');
 });

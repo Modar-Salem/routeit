@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\UsersFollowedTechnology;
 use App\Models\UserSkillComment;
 use App\Models\TechnologyLevel;
 use Illuminate\Database\Seeder;
@@ -29,7 +30,9 @@ class DatabaseSeeder extends Seeder
             TestQuestionsSeeder::class,
             UserSkillCommentsSeeder::class,
             UserCommentRepliesSeeder::class,
-            RoadmapUserRankingSeeder::class
+            RoadmapUserRankingSeeder::class,
+            UsersFollowedExpertsSeeder::class,
+            UsersFollowedTechnologySeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

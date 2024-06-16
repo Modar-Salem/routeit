@@ -64,4 +64,20 @@ class MobileUser extends Authenticatable
         return $this->belongsToMany(Roadmap::class, 'roadmap_users_rankings')
             ->withPivot(['userXP']);
     }
+
+    public function previousWeekRoadmapsUserRanking()
+    {
+        return $this->belongsToMany(Roadmap::class, 'previous_week_roadmap_users_rankings')
+            ->withPivot(['userXP']);
+    }
+
+    public function followedExperts()
+    {
+        return $this->belongsToMany(Expert::class, 'users_followed_experts');
+    }
+
+    public function followedTechnologies()
+    {
+        return $this->belongsToMany(Technology::class, 'users_followed_technologies');
+    }
 }
