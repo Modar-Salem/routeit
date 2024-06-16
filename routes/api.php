@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\CommentReply;
+use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
+use App\Http\Controllers\api\TestController;
+use App\Http\Controllers\api\TestQuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,28 +22,57 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function(){
+Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('forgetPassword', 'forgetPassword');
+    Route::post('checkResetPasswordCode', 'checkResetPasswordCode');
+    Route::post('resetPassword', 'resetPassword');
 });
 
-Route::controller(AuthController::class)->middleware('auth:sanctum')->group(function () {
+Route::controller(AuthController::class)->middleware(['auth:sanctum'])->group(function () {
     Route::post('checkEmailVerificationCode', 'checkEmailVerificationCode');
     Route::post('completeRegister', 'completeRegister');
-    Route::post('logout','logout');
 });
 
-Route::controller(TechnologyCategoriesController::class)->middleware('auth:sanctum')->group(function () {
-    Route::get('getTechnologyCategories','getTechnologyCategories');
+Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::post('logout', 'logout');
+});
+
+Route::controller(MobileUserController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::put('editProfile', 'editProfile');
+});
+
+Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
     Route::get('getTechnologyLevels', 'getTechnologyLevels');
 });
 
-Route::controller(RoadmapsController::class)->middleware('auth:sanctum')->group(function () {
+Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getRoadmaps', 'getRoadmaps');
     Route::get('getRoadmapSkills', 'getRoadmapSkills');
     Route::get('getSkillVideos', 'getSkillVideos');
-    Route::get('getSkillArticles' , 'getSkillArticles');
+    Route::get('getSkillArticles', 'getSkillArticles');
     Route::get('getArticleSections', 'getArticleSections');
+});
+
+Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTest', 'getTest');
+    Route::post('saveTestResult', 'saveTestResult');
+});
+
+Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getTestQuestions', 'getTestQuestions');
+});
+
+Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('skillComment')->group(function () {
+    Route::get('get', 'get');
+    Route::post('add', 'add');
+    Route::put('edit', 'edit');
+    Route::delete('delete', 'delete');
+});
+
+Route::controller(CommentReply::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('commentReply')->group(function () {
+    Route::get('get', 'get');
 });

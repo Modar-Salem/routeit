@@ -21,16 +21,19 @@ class TechnologyCategoriesController extends Controller
 
     public function getTechnologies(Request $request)
     {
-        $data = TechnologyCategory::find($request['technology_category_id'])->technologies;
+        $technologyCategoryId = $request['technology_category_id'];
+        $data = TechnologyCategory::find($technologyCategoryId)->technologies;
+
         return response()->json([
             'message' => 'Success',
             'data' => $data
         ], 200);
     }
 
-    public function getTechnologyLevels(Request $request) {
-        $technologyId = $request->technology_id;
-        $levels = TechnologyLevel::where('technology_id', $technologyId)->get();
+    public function getTechnologyLevels(Request $request)
+    {
+        $technologyId = $request['technology_id'];
+        $levels = Technology::find($technologyId)->levels;
 
         return response()->json([
             'message' => 'Success',
