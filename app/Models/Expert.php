@@ -12,7 +12,7 @@ class Expert  extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $fillable = ['name','email','password','image','bio'] ;
+    protected $fillable = ['name','email','password','image','bio','type'] ;
 
     public function roadmaps() {
         return $this->hasMany(Roadmap::class, 'expert_id');

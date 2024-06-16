@@ -6,13 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Mail\api\EmailVerificationMail;
 use App\Models\MobileEmailVerificationCode;
 use App\Models\MobileUser;
-use http\Env\Response;
-use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use function Laravel\Prompts\password;
 
 class AuthController extends Controller
 {

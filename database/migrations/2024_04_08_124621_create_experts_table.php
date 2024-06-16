@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('image')->nullable() ;
             $table->text('bio') ;
+            $table->enum('type' , ['normal' , 'blocked'])->default('normal') ;
+
             $table->rememberToken();
 
             $table->timestamps();

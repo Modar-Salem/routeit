@@ -16,7 +16,7 @@ class MobileUser extends Authenticatable
 
     protected $fillable = [
         'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
-        'it_student', 'university', 'bio',
+        'it_student', 'university', 'bio','type'
     ];
 
     protected $hidden = [

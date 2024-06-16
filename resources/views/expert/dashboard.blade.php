@@ -70,9 +70,10 @@
                                                     <span
                                                         class="text-muted">Last updated on : {{$roadmap->updated_at->format('Y-M-D')}}</span>
                                                     <span>
-                        <a href="{{asset('storage/'.$roadmap->target_cv)}}"><i class="fa fa-file-pdf-o"
-                                                                               aria-hidden="true"
-                                                                               data-info="Target CV"></i></a>
+                        <a href="{{asset('storage/'.$roadmap->target_cv)}}">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true" data-info="Target CV">
+                            </i>
+                        </a>
                         <a href="{{asset('storage/'.$roadmap->introductory_video)}}">	<i class="fa fa-play-circle"
                                                                                             aria-hidden="true"
                                                                                             data-info="Intro Video"></i></a>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('it_student')->nullable();
             $table->string('university')->nullable();
             $table->text('bio')->nullable();
+            $table->enum('type' , ['normal' , 'blocked'])->default('normal') ;
             $table->rememberToken();
             $table->timestamps();
 
