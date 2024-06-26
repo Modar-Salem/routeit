@@ -66,9 +66,11 @@ Route::controller(\App\Http\Controllers\admin\TestQuestionController::class)->mi
 
 Route::controller(\App\Http\Controllers\admin\MobileUserController::class)->middleware(['auth'])->prefix('mobile_user')->group(function () {
     Route::get('index' , 'index')->name('admin.mobile_user.index') ;
+    Route::get('block/{id}' , 'block')->name('admin.mobile_user.block') ;
 });
 Route::controller(\App\Http\Controllers\admin\ExpertController::class)->middleware(['auth'])->prefix('expert')->group(function () {
     Route::get('index' , 'index')->name('admin.expert.index') ;
+    Route::get('block/{id}' , 'block')->name('admin.expert.block') ;
 });
 
 Route::middleware(['auth'])->group(function (){

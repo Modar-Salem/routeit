@@ -13,4 +13,24 @@ class ExpertController extends Controller
         $experts= Expert::all() ;
         return view('admin.expert.index' , compact('experts')) ;
     }
+    public function block($id){
+
+        $expert = Expert::find($id) ;
+        if(!$expert)
+        {
+            return redirect()->back() ;
+        }
+        if($expert->type == 'normal')
+            $expert->update([
+                'type' => 'blocked'
+            ]);
+
+        elseif($expert->type == 'blocked')
+            $expert->update([
+                'type' => 'normal'
+            ]);
+
+        $expert->tokens()->delete();
+        return redirect()->back() ;
+    }
 }

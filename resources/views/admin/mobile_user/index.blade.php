@@ -45,7 +45,11 @@
                                                 <td>
                                                     <div class="d-flex flex-row">
                                                         <div class="btn-group">
-                                                            <a href="#" type="button" class="btn btn-danger ml-3">Block &rarr;</a>
+                                                            @if($mobile_user->type=='normal')
+                                                                <a href="{{route('admin.mobile_user.block',$mobile_user->id)}}" type="button" class="btn btn-danger ml-3">Blocked</a>
+                                                            @elseif($mobile_user->type=='blocked')
+                                                                <a href="{{route('admin.mobile_user.block',$mobile_user->id)}}" type="button" class="btn btn-success ml-3">UnBlocked</a>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </td>

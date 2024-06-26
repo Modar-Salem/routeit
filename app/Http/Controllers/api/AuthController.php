@@ -8,13 +8,10 @@ use App\Mail\api\ResetPasswordMail;
 use App\Models\MobileEmailVerificationCode;
 use App\Models\MobileResetPasswordCode;
 use App\Models\MobileUser;
-use http\Env\Response;
-use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use function Laravel\Prompts\password;
 
 class AuthController extends Controller
 {
