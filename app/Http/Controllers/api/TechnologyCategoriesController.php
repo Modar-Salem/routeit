@@ -40,4 +40,27 @@ class TechnologyCategoriesController extends Controller
             'levels' => $levels
         ], 200);
     }
+
+    public function searchTechnologyCategories(Request $request)
+    {
+        if ($request->name === null) {
+            $technologyCategories = TechnologyCategory::query()
+                ->where('name_ar', 'like', '%' . $request->name_ar . '%')
+                ->get();
+        } else {
+            $technologyCategories = $technologyCategories = TechnologyCategory::query()
+                ->where('name', 'like', '%' . $request->name . '%')
+                ->get();
+        }
+
+        return response()->json([
+            'message' => 'Success',
+            'technologyCategories' => $technologyCategories
+        ], 200);
+    }
+
+    public function searchTechnologies(Request $request)
+    {
+
+    }
 }

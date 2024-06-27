@@ -62,6 +62,8 @@ Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanc
     Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
     Route::get('getTechnologyLevels', 'getTechnologyLevels');
+    Route::get('searchTechnologyCategories', 'searchTechnologyCategories');
+    Route::get('searchTechnologies', 'searchTechnologies');
 });
 
 Route::controller(UserFollowedTechnologyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
