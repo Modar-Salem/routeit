@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('skill_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mobile_user_id')->constrained('mobile_users');
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
+            $table->foreignId('mobile_user_id')->constrained('mobile_users')->onDelete('cascade');
+            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills')->onDelete('cascade');
             $table->text('comment');
             $table->timestamps();
         });

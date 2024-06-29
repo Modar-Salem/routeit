@@ -50,6 +50,7 @@ class CommentController extends Controller
             'status' => 'success',
             'message' => 'Comment added successfully'
         ], 200);
+
     }
 
     public function edit(Request $request)
@@ -100,9 +101,6 @@ class CommentController extends Controller
             ], 403);
         }
 
-        $replies = CommentReply::where('skill_comments_id', $comment['id'])->get();
-
-        $replies->each->delete();
         $comment->delete();
 
         return response()->json([
@@ -110,4 +108,5 @@ class CommentController extends Controller
             'message' => 'Comment and its replies deleted successfully'
         ], 200);
     }
+
 }

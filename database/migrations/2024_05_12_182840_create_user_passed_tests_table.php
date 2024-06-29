@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('user_passed_tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mobile_user_id')->constrained('mobile_users');
-            $table->foreignId('test_id')->constrained('tests');
+            $table->foreignId('mobile_user_id')->constrained('mobile_users')->onDelete('cascade');
+            $table->foreignId('test_id')->constrained('tests')->onDelete('cascade');
             $table->boolean('isPassed')->default(false);
             $table->timestamps();
         });

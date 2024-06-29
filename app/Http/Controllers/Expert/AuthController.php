@@ -93,13 +93,13 @@ class AuthController extends Controller
             'image'                => 'required|image',
             'terms'                => 'accepted',
         ])->validate();
-        $path = $this->storefile($request['image'],'expert_profile_image');
+        $path = $this->storefile($request->file('image'),'expert_profile_image');
 
         Expert::create([
             'name' => $request['firstname'] . ' ' . $request['lastname'],
             'email' => $request['email']
             ,'password' => Hash::make($request['password'])
-            ,'image' => $path[0]
+            ,'image' => $path
             ,'bio'=> $request['bio']
         ]);
 
