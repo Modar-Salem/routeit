@@ -35,4 +35,9 @@ class Technology extends Model
     {
         return $this->belongsTo(TechnologyCategory::class, 'technology_category_id');
     }
+
+    public function followingUsers()
+    {
+        return $this->belongsToMany(MobileUser::class, 'users_followed_technologies');
+    }
 }

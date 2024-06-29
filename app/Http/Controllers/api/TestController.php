@@ -11,20 +11,9 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function getTest(Request $request)
-    {
-        $roadmap_skill_id = $request['roadmap_skill_id'];
-        $test = RoadmapSkill::find($roadmap_skill_id)->test;
-
-        return response()->json([
-            'status' => 'Success',
-            'test' => $test
-        ], 200);
-    }
-
     public function saveTestResult(Request $request)
     {
-        if(!$request['isPassed']) {
+        if (!$request['isPassed']) {
             return response()->json([
                 'status' => false,
                 'message' => 'User does not pass the test.'
@@ -36,8 +25,20 @@ class TestController extends Controller
         UserPassedTest::create([
             'mobile_user_id' => $user['id'],
             'test_id' => $request['test_id'],
-            'isPassed'=> true
+            'isPassed' => true
         ]);
+
+        $test = Test::find($request['test_id']);
+        $skill = $test->roadmapSkill;
+        $roadmap = $skill->roadmap;
+        $roadmapUserRanking = $user->roadmapsUserRanking->find($roadmap['id']);
+
+        if ($roadmapUserRanking === null) {
+            $user->roadmapsUserRanking()->attach($roadmap['id']);
+            $roadmapUserRanking = $user->roadmapsUserRanking()->find($roadmap['id']);
+        }
+        $roadmapUserRanking->pivot->userXP += $test['total_xp'];
+        $roadmapUserRanking->pivot->save();
 
         return response()->json([
             'status' => 'success',

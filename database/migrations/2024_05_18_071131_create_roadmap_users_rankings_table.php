@@ -10,11 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('skill_comments', function (Blueprint $table) {
+        Schema::create('roadmap_users_rankings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mobile_user_id')->constrained('mobile_users');
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
-            $table->text('comment');
+            $table->foreignId('mobile_user_id')->constrained('mobile_users')->onDelete('cascade');
+            $table->foreignId('roadmap_id')->constrained('roadmaps')->onDelete('cascade');
+            $table->integer('userXP')->default(0);
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('skill_comments');
+        Schema::dropIfExists('roadmap_users_rankings');
     }
 };

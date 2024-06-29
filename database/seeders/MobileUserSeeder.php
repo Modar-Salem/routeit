@@ -44,6 +44,8 @@ class MobileUserSeeder extends Seeder
             'it_student' => false,
             'university' => 'Another University',
             'bio' => 'bio needed',
+            'verify' => true,
+            'completed' => true
         ]);
 
     }

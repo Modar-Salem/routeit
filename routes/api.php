@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\CommentController;
-use App\Http\Controllers\api\CommentReply;
+use App\Http\Controllers\api\ExpertController;
+use App\Http\Controllers\api\RoadmapUsersRankingController;
+use App\Http\Controllers\api\UserCommentReplyController;
+use App\Http\Controllers\api\UserFollowedExpertController;
+use App\Http\Controllers\api\UserFollowedTechnologyController;
+use App\Http\Controllers\api\UserSkillCommentController;
 use App\Http\Controllers\api\MobileUserController;
 use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
@@ -40,13 +44,32 @@ Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedA
 });
 
 Route::controller(MobileUserController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getStudentProfile', 'getStudentProfile');
     Route::put('editProfile', 'editProfile');
+});
+
+Route::controller(ExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getExpertProfile', 'getExpertProfile');
+});
+
+Route::controller(UserFollowedExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('showFollowedExperts', 'showFollowedExperts');
+    Route::post('followExpert', 'followExpert');
+    Route::delete('unfollowExpert', 'unfollowExpert');
 });
 
 Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getTechnologyCategories', 'getTechnologyCategories');
     Route::get('getTechnologies', 'getTechnologies');
     Route::get('getTechnologyLevels', 'getTechnologyLevels');
+    Route::get('searchTechnologyCategories', 'searchTechnologyCategories');
+    Route::get('searchTechnologies', 'searchTechnologies');
+});
+
+Route::controller(UserFollowedTechnologyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('showFollowedTechnologies', 'showFollowedTechnologies');
+    Route::post('followTechnology', 'followTechnology');
+    Route::delete('unfollowTechnology', 'unfollowTechnology');
 });
 
 Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -58,7 +81,6 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
 });
 
 Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
-    Route::get('getTest', 'getTest');
     Route::post('saveTestResult', 'saveTestResult');
 });
 
@@ -66,13 +88,21 @@ Route::controller(TestQuestionController::class)->middleware(['auth:sanctum', 'v
     Route::get('getTestQuestions', 'getTestQuestions');
 });
 
-Route::controller(CommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('skillComment')->group(function () {
+Route::controller(UserSkillCommentController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('userSkillComment')->group(function () {
     Route::get('get', 'get');
     Route::post('add', 'add');
     Route::put('edit', 'edit');
     Route::delete('delete', 'delete');
 });
 
-Route::controller(CommentReply::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('commentReply')->group(function () {
+Route::controller(UserCommentReplyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('userCommentReply')->group(function () {
     Route::get('get', 'get');
+    Route::post('add', 'add');
+    Route::put('edit', 'edit');
+    Route::delete('delete', 'delete');
+});
+
+Route::controller(RoadmapUsersRankingController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getRoadmapRanking', 'getRoadmapRanking');
+    Route::get('test', 'test');
 });

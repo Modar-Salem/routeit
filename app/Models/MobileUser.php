@@ -16,7 +16,7 @@ class MobileUser extends Authenticatable
 
     protected $fillable = [
         'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
-        'it_student', 'university', 'bio','type'
+        'it_student', 'university', 'bio', 'userXP', 'type'
     ];
 
     protected $hidden = [
@@ -44,6 +44,11 @@ class MobileUser extends Authenticatable
         return $this->hasManyThrough(Technology::class, Test::class);
     }
 
+    public function comments()
+    {
+        return $this->morphToMany(UserSkillComment::class, 'user_skill_commentables');
+    }
+
     public function skillComments()
     {
         return $this->belongsToMany(RoadmapSkill::class, 'skill_comments');
@@ -51,11 +56,38 @@ class MobileUser extends Authenticatable
 
     public function commentReplies()
     {
-        return $this->belongsToMany(SkillComment::class, 'comment_replies');
+        return $this->morphToMany(UserCommentReply::class, 'user_comment_repliesables');
     }
 
     public function passedTests()
     {
         return $this->belongsToMany(Test::class, 'user_passed_tests');
+    }
+
+    public function roadmapsUserRanking()
+    {
+        return $this->belongsToMany(Roadmap::class, 'roadmap_users_rankings')
+            ->withPivot(['userXP']);
+    }
+
+    public function previousWeekRoadmapsUserRanking()
+    {
+        return $this->belongsToMany(Roadmap::class, 'previous_week_roadmap_users_rankings')
+            ->withPivot(['userXP']);
+    }
+
+    public function followedExperts()
+    {
+        return $this->belongsToMany(Expert::class, 'users_followed_experts');
+    }
+
+    public function followedTechnologies()
+    {
+        return $this->belongsToMany(Technology::class, 'users_followed_technologies');
+    }
+
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class, 'competitors');
     }
 }
