@@ -8,13 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Expert  extends Authenticatable
+class Expert extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = ['name','email','password','image','bio','type'] ;
 
-    public function roadmaps() {
+    public function roadmaps()
+    {
         return $this->hasMany(Roadmap::class, 'expert_id');
     }
 
@@ -26,4 +27,19 @@ class Expert  extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function comments()
+    {
+        return $this->morphToMany(UserSkillComment::class, 'user_skill_commentables');
+    }
+
+    public function commentReplies()
+    {
+        return $this->morphToMany(UserCommentReply::class, 'user_comment_repliesables');
+    }
+
+    public function followingUsers()
+    {
+        return $this->belongsToMany(MobileUser::class, 'users_followed_experts');
+    }
 }

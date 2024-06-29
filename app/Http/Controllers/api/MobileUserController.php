@@ -3,11 +3,24 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MobileUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class MobileUserController extends Controller
 {
+
+    public function getStudentProfile(Request $request)
+    {
+        $studentId = $request['mobile_user_id'];
+        $student = MobileUser::find($studentId)->first();
+
+        return response()->json([
+            'status' => 'success',
+            'student' => $student
+        ], 200);
+    }
+
     public function editProfile(Request $request)
     {
         $data = $request->all();
