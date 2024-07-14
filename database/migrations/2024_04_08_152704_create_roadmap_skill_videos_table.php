@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('roadmap_skill_videos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
+            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills')->onDelete('cascade');
             $table->string('title');
             /* nullable temporary */
             $table->string('video')->nullable(); // Assuming this is a file path or URL

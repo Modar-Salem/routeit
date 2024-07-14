@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('test_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id')->constrained('tests');
+            $table->foreignId('test_id')->constrained('tests')->onDelete('cascade');
             $table->text('question');
             $table->string('option1');
             $table->string('option2');

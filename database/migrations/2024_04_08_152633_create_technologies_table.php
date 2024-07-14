@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('technologies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('technology_category_id')->constrained('technology_categories');
+            $table->foreignId('technology_category_id')->constrained('technology_categories')->onDelete('cascade');
             $table->string('name');
             $table->string('name_ar');
             $table->text('description');

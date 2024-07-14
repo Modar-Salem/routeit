@@ -92,11 +92,20 @@ class SkillContentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showVideo(string $id)
     {
-        $skillContent = RoadmapSkill::find($id) ;
-        return view('expert.skills_content.show' , compact('skillContent'));
+        $video = RoadmapSkillVideo::find($id) ;
+        return view('expert.skills_content.show_video' , compact('video'));
     }
+
+    public function showBlog(string $id)
+    {
+        $article = RoadmapSkillArticle::find($id) ;
+
+        return view('expert.skills_content.show_blog' , compact('article'));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

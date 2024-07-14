@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->constrained('roadmap_skill_articles') ;
+            $table->foreignId('article_id')->constrained('roadmap_skill_articles')->onDelete('cascade') ;
             $table->string('title');
             $table->text('content');
             $table->string('image')->nullable() ;

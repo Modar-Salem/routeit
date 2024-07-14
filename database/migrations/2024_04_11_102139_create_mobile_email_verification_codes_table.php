@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('mobile_email_verification_codes', function (Blueprint $table) {
             $table->id();
             $table->integer('accountVerificationCode')->default(null);
-            $table->foreignId('user_id')->constrained('mobile_users');
+            $table->foreignId('user_id')->constrained('mobile_users')->onDelete('cascade');
             $table->timestamps();
         });
     }

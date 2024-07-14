@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mobile_reset_password_codes', function (Blueprint $table) {
             $table->id();
             $table->integer('resetPasswordCode')->default(null);
-            $table->foreignId('user_id')->constrained('mobile_users');
+            $table->foreignId('user_id')->constrained('mobile_users')->onDelete('cascade');
             $table->timestamps();
         });
     }
