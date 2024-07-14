@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\ExpertController;
 use App\Http\Controllers\api\RoadmapUsersRankingController;
 use App\Http\Controllers\api\UserCommentReplyController;
+use App\Http\Controllers\api\UserFollowedCompanyController;
 use App\Http\Controllers\api\UserFollowedExpertController;
 use App\Http\Controllers\api\UserFollowedTechnologyController;
 use App\Http\Controllers\api\UserSkillCommentController;
@@ -105,4 +106,10 @@ Route::controller(UserCommentReplyController::class)->middleware(['auth:sanctum'
 Route::controller(RoadmapUsersRankingController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getRoadmapRanking', 'getRoadmapRanking');
     Route::get('test', 'test');
+});
+
+Route::controller(UserFollowedCompanyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('showFollowedCompanies', 'showFollowedCompanies');
+    Route::post('followCompany', 'followCompany');
+    Route::delete('unfollowCompany', 'unfollowCompany');
 });

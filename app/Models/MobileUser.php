@@ -86,6 +86,11 @@ class MobileUser extends Authenticatable
         return $this->belongsToMany(Technology::class, 'users_followed_technologies');
     }
 
+    public function followedCompanies()
+    {
+        return $this->belongsToMany(Company::class, 'users_followed_companies');
+    }
+
     public function competitions()
     {
         return $this->belongsToMany(Competition::class, 'competitors');
