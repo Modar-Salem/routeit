@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CompanyController;
+use App\Http\Controllers\api\CompetitionController;
+use App\Http\Controllers\api\CompetitorController;
 use App\Http\Controllers\api\ExpertController;
 use App\Http\Controllers\api\RoadmapUsersRankingController;
 use App\Http\Controllers\api\UserCommentReplyController;
@@ -13,6 +16,7 @@ use App\Http\Controllers\api\RoadmapsController;
 use App\Http\Controllers\api\TechnologyCategoriesController;
 use App\Http\Controllers\api\TestController;
 use App\Http\Controllers\api\TestQuestionController;
+use App\Models\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -113,3 +117,22 @@ Route::controller(UserFollowedCompanyController::class)->middleware(['auth:sanct
     Route::post('followCompany', 'followCompany');
     Route::delete('unfollowCompany', 'unfollowCompany');
 });
+
+Route::controller(CompanyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('getCompanyProfile', 'getCompanyProfile');
+});
+
+Route::controller(CompetitionController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('competition')->group(function () {
+    Route::get('previous', 'previous');
+    Route::get('current', 'current');
+    Route::get('upcoming', 'upcoming');
+    Route::get('all', 'all');
+});
+
+Route::controller(CompetitorController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('competitor')->group(function () {
+    Route::post('register', 'register');
+    Route::put('editProjectLink', 'editProjectLink');
+    Route::get('competitions', 'competitions');
+    Route::get('competitorDetails', 'competitorDetails');
+});
+

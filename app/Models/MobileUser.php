@@ -16,7 +16,7 @@ class MobileUser extends Authenticatable
 
     protected $fillable = [
         'email', 'password', 'verify', 'completed', 'name', 'image', 'birth_date',
-        'it_student', 'university', 'bio', 'userXP', 'type'
+        'it_student', 'university', 'bio', 'userXP', 'project_link', 'type'
     ];
 
     protected $hidden = [
@@ -93,6 +93,7 @@ class MobileUser extends Authenticatable
 
     public function competitions()
     {
-        return $this->belongsToMany(Competition::class, 'competitors');
+        return $this->belongsToMany(Competition::class, 'competitors')
+            ->withPivot(['project_link']);
     }
 }

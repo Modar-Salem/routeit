@@ -13,7 +13,7 @@ class MobileUserController extends Controller
     public function getStudentProfile(Request $request)
     {
         $studentId = $request['mobile_user_id'];
-        $student = MobileUser::find($studentId)->first();
+        $student = MobileUser::find($studentId);
 
         return response()->json([
             'status' => 'success',

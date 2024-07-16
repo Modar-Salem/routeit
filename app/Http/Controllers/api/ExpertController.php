@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class ExpertController extends Controller
 {
-    public function getExpertProfile(Request $request) {
+    public function getExpertProfile(Request $request)
+    {
         $expertId = $request['expert_id'];
-        $expert = Expert::find($expertId)->first();
+        $expert = Expert::find($expertId);
 
         return response()->json([
             'status' => 'success',
