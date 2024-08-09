@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CompetitionsSeeder::class,
             CompetitorsSeeder::class,
+            CompetitionWinnerSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
