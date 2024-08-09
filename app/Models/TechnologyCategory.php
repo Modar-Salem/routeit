@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 
 class TechnologyCategory extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
 
     protected $fillable = ['name', 'name_ar', 'description', 'description_ar', 'image'];
 

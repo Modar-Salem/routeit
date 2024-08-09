@@ -18,7 +18,9 @@ class SkillContentController extends Controller
      */
     public function index(string $skill_id)
     {
+
         $skill = RoadmapSkill::find($skill_id) ;
+
         $videos = $skill->videos ;
         $blogs = $skill->articles ;
         return view('expert.skills_content.index' , compact('videos' ,'blogs' ,'skill_id')) ;
@@ -46,7 +48,8 @@ class SkillContentController extends Controller
                 'title' => 'required|string|max:200' ,
                 'video' => 'required'
             ]);
-            $video_path =  $this->storefile($request['video'] , 'Content Video') ;
+            $video_path =  $this->storefile($request->file('video') , 'Content Video') ;
+            $video_path = $this->processVideoForHLS($video_path , 'SkillContentHLS') ;
             RoadmapSkillVideo::create([
                 'roadmap_skill_id' => $skill_id ,
                 'title' => $request['title'] ,
@@ -89,11 +92,20 @@ class SkillContentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showVideo(string $id)
     {
-        $skillContent = RoadmapSkill::find($id) ;
-        return view('expert.skills_content.show' , compact('skillContent'));
+        $video = RoadmapSkillVideo::find($id) ;
+        return view('expert.skills_content.show_video' , compact('video'));
     }
+
+    public function showBlog(string $id)
+    {
+        $article = RoadmapSkillArticle::find($id) ;
+
+        return view('expert.skills_content.show_blog' , compact('article'));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

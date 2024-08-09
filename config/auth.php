@@ -46,6 +46,9 @@ return [
         ],'expert' => [
             'driver' => 'session',
             'provider' => 'experts',
+        ],'company' => [
+            'driver' => 'session',
+            'provider' => 'companies',
         ],
 
     ],
@@ -78,6 +81,10 @@ return [
         ],'experts' => [
             'driver' => 'eloquent',
             'model' => App\Models\Expert::class,
+        ],
+        'companies' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Company::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

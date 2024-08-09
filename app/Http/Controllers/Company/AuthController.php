@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Expert;
+namespace App\Http\Controllers\Company;
 
-use App\Models\Expert;
+use App\Models\Company;
 use App\Models\User;
 use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -22,10 +21,7 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        $user = Auth::guard('expert')->user() ;
-        $roadmaps= $user->roadmaps;
-
-        return view('expert.dashboard' , compact('user' , 'roadmaps')) ;
+        return view('company.dashboard') ;
     }
 
     /**
@@ -35,7 +31,7 @@ class AuthController extends Controller
      */
     public function login()
     {
-        return view('expert.auth.login');
+        return view('company.auth.login');
     }
 
     /**
@@ -54,14 +50,14 @@ class AuthController extends Controller
             'password' => 'required'
         ])->validate();
 
-        if (!Auth::guard('expert')->attempt($data)) {
+        if (!auth()->guard('company')->attempt($data)) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed')
             ]);
         }
 
         $request->session()->regenerate();
-        return redirect()->route('expert.dashboard');
+        return redirect()->route('company.dashboard');
     }
 
 
@@ -72,7 +68,7 @@ class AuthController extends Controller
      */
     public function create()
     {
-        return view('expert.auth.register') ;
+        return view('company.auth.register') ;
     }
 
     /**
@@ -85,25 +81,28 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $data = $request->all();
+
         Validator::make($data, [
             'firstname'            => 'required|string|max:255',
             'lastname'             => 'required|string|max:255',
-            'email'                => 'required|string|email|max:255|unique:experts',
+            'email'                => 'required|string|email|max:255|unique:users',
             'password'             => 'required|string|min:8|confirmed',
             'image'                => 'required|image',
+            'description'          => 'required|string' ,
             'terms'                => 'accepted',
         ])->validate();
-        $path = $this->storefile($request->file('image'),'expert_profile_image');
 
-        Expert::create([
+        $path = $this->storefile($request->file('image') , 'Company/profile/images');
+
+        Company::create([
             'name' => $request['firstname'] . ' ' . $request['lastname'],
-            'email' => $request['email']
-            ,'password' => Hash::make($request['password'])
-            ,'image' => $path
-            ,'bio'=> $request['bio']
+            'email'           => $data['email'],
+            'description'=> $data['description'] ,
+            'password'        => Hash::make($data['password']),
+            'image' => $path
         ]);
 
-        return redirect()->route('expert.login');
+        return redirect()->route('company.login');
     }
 
     /**
@@ -113,13 +112,13 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->guard('expert')->logout();
+        auth()->guard('company')->logout();
 
         request()->session()->invalidate();
 
         request()->session()->regenerateToken();
 
-        return redirect()->route('expert.login'); // Redirect to the login route after logging out
+        return redirect()->route('company.login'); // Redirect to the login route after logging out
     }
 
 }

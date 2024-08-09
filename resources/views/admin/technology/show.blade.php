@@ -64,9 +64,11 @@
                                         <div class="form-group">
                                             <label class="form-label">videos</label>
                                             <hr/>
-                                            @foreach(json_decode($technology->videos) as $video )
-                                                <video src="{{ asset('storage/'. $video) }}"  class="file-thumbnail">
-                                            @endforeach
+                                            @if($technology->videos)
+                                                @foreach(json_decode($technology->videos) as $video )
+                                                    <video src="{{ asset('storage/'. $video) }}"  class="file-thumbnail">
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- /.box-body -->

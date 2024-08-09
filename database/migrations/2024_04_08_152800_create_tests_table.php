@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('technology_id')->constrained('technologies');
-            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills');
+            $table->foreignId('technology_id')->constrained('technologies')->onDelete('cascade');
+            $table->foreignId('roadmap_skill_id')->constrained('roadmap_skills')->onDelete('cascade');
             $table->integer('total_xp');
             $table->timestamps();
         });

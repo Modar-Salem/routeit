@@ -18,6 +18,8 @@ Route::controller(\App\Http\Controllers\Expert\AuthController::class)->group(fun
 Route::controller(\App\Http\Controllers\Expert\RoadMapController::class)->middleware(['auth:expert'])->prefix('roadmap')->group(function () {
     Route::get('create' , 'create')->name('expert.roadmap.create') ;
     Route::post('store' , 'store')->name('expert.roadmap.save') ;
+    Route::delete('destroy/{id}' , 'destroy')->name('expert.roadmap.destroy') ;
+
 });
 Route::middleware(['auth:expert'])->group(function (){
     Route::get('dashboard' , [\App\Http\Controllers\Expert\AuthController::class , 'dashboard'])->name('expert.dashboard');
@@ -40,7 +42,8 @@ Route::controller(\App\Http\Controllers\Expert\SkillContentController::class)->m
     Route::get('index/{skill_id}' , 'index')->name('expert.skills_content.index') ;
     Route::get('create/{skill_id}' , 'create')->name('expert.skills_content.create') ;
     Route::post('store/{skill_id}' , 'store')->name('expert.skills_content.store') ;
-    Route::get('/{skill_content}' , 'show')->name('expert.skills_content.show') ;
+    Route::get('video/{skill_content}' , 'showVideo')->name('expert.skills_content.show-video') ;
+    Route::get('blog/{skill_content}' , 'showBlog')->name('expert.skills_content.show-blog') ;
     Route::get('{skill_content}/edit' , 'edit')->name('expert.skills_content.edit') ;
     Route::put('/{skill_content}' , 'update')->name('expert.skills_content.update') ;
     Route::delete('/{skill_content}' , 'destroy')->name('expert.skills_content.destroy') ;

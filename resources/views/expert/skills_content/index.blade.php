@@ -47,7 +47,7 @@
                                                                 @method('DELETE')
                                                                 <button class="waves-effect waves-light btn btn-danger-light  ml-3" style="width:100%; height: 100% ;">Delete</button>
                                                             </form>
-                                                            <a href="{{ route('expert.skills_content.show', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show Video &rarr;</a>
+                                                            <a href="{{ route('expert.skills_content.show-video', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show Video &rarr;</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -65,7 +65,7 @@
                                                                 @method('DELETE')
                                                                 <button class="waves-effect waves-light btn btn-danger-light  ml-3" style="width:100%; height: 100% ;">Delete</button>
                                                             </form>
-                                                            <a href="{{ route('expert.skills_content.show', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show  Blogs &rarr;</a>
+                                                            <a href="{{ route('expert.skills_content.show-blog', $skill_content) }}" type="button" class="btn btn-primary ml-3">Show  Blogs &rarr;</a>
                                                         </div>
                                                     </div>
                                                 </td>

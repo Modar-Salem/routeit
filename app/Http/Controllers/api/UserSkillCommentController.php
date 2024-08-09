@@ -75,6 +75,7 @@ class UserSkillCommentController extends Controller
             'status' => 'success',
             'message' => 'Comment added successfully'
         ], 200);
+
     }
 
     public function edit(Request $request)
@@ -135,4 +136,5 @@ class UserSkillCommentController extends Controller
             'message' => 'Comment and its replies deleted successfully'
         ], 200);
     }
+
 }

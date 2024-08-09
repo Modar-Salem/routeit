@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('roadmaps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expert_id')->constrained('experts');
-            $table->foreignId('technology_level_id')->constrained('technology_levels');
+            $table->foreignId('expert_id')->constrained('experts')->onDelete('cascade');
+            $table->foreignId('technology_level_id')->constrained('technology_levels')->onDelete('cascade');
             $table->string('title');
             $table->string('title_ar');
             $table->text('description');

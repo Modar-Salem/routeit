@@ -91,6 +91,8 @@ class RoadMapController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $roadMap = Roadmap::find($id) ;
+        $roadMap->delete() ;
+        return redirect()->back() ;
     }
 }
