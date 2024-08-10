@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,8 +10,19 @@ class Competitor extends Model
 
     protected $fillable = ['competition_id', 'mobile_user_id', 'project_link'];
 
-    public function Winner()
+    public function mobileUser()
+    {
+        return $this->belongsTo(MobileUser::class, 'mobile_user_id');
+    }
+
+    public function winner()
     {
         return $this->hasOne(CompetitionWinner::class);
+    }
+
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
     }
 }

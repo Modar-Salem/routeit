@@ -9,8 +9,8 @@
     <link rel="icon" href="{{asset('images/favicon.ico')}}">
 
 
-    <title>RouteIT Expert SignUp</title>
-    @include('layouts.expert.head') ;
+    <title>RouteIT Company SignUp</title>
+    @include('layouts.company.head') ;
 
     <style>
         #map {
@@ -41,7 +41,7 @@
                         <!-- ... [Previous HTML Code] ... -->
 
                         <div class="p-40">
-                            <form action="{{ route('expert.register.save') }}" id="registerForm" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('company.register.save') }}" id="registerForm" method="post" enctype="multipart/form-data">
                             @csrf  <!-- CSRF token for security -->
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -55,8 +55,7 @@
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="First Name" name="firstname" required>
-                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Last Name" name="lastname"required>
+                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Name" name="name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -78,7 +77,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Bio</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-transparent"><i class="ti-location-pin"></i></span>
+                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Enter the Company Location " name="location" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">BIO</label>
                                     <textarea rows="5" class="form-control" name="bio" placeholder="Bio" required ></textarea>
                                 </div>
                                 <div class="mb-3">
@@ -100,7 +105,7 @@
                                 </div>
                             </form>
                             <div class="text-center">
-                                <p class="mt-15 mb-0">Already have an account?<a href="{{route('expert.login')}}" class="text-danger ms-5"> Sign In </a></p>
+                                <p class="mt-15 mb-0">Already have an account?<a href="{{route('company.login')}}" class="text-danger ms-5"> Sign In </a></p>
                             </div>
                         </div>
                         <!-- ... [Rest of the HTML Code] ... -->

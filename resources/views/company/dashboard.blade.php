@@ -1,9 +1,9 @@
-@extends('layouts.expert.master')
+@extends('layouts.company.master')
 @section('title')
-    Expert Dashboard
+    Company Dashboard
 @endsection
 @section('route_dashboard')
-    <a href="{{route('expert.dashboard')}}" class="logo">
+    <a href="{{route('company.dashboard')}}" class="logo">
         @endsection
         @section('style')
             <style>
@@ -45,7 +45,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Your Road-Maps</h4>
-                        <a href="{{route('expert.roadmap.create')}}" class="btn btn-primary">Add RoadMap</a>
+                        <a href="{{route('company.competition.create')}}" class="btn btn-primary">Add Competition</a>
                     </div>
                 </div>
                 <div class="container-full">
@@ -54,34 +54,50 @@
                         <div class="row">
                             <div class="row">
                                 <div class="row">
-                                    @foreach($roadmaps as $roadmap)
+                                    @foreach($competitions->get() as $competition)
+
                                         <div class="col-md-12 col-lg-4">
                                             <div class="card">
-                                                <a href="{{route('expert.skills.index', $roadmap->id)}}">
-                                                    <img class="card-img-top" src="{{$roadmap->cover}}" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">{{$roadmap->title}}</h4>
-                                                        <p class="card-text">{{$roadmap->description}}</p>
-                                                    </div>
-                                                </a>
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <span><i class="fa fa-user me-2"></i> <a href="#">{{\Illuminate\Support\Facades\Auth::guard('company')->user()->name}}</a></span>
+                                                    <span class="text-muted">Added {{ $competition->created_at->diffForHumans() }}</span>
+                                                </div>
+                                                <img class="card-img-top bter-0 btsr-0" src="{{ asset('storage/'.$competition->image) }}" alt="Card image cap" style="max-width: 100%; max-height: 300px; width: auto; height: auto;">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{$competition->name}}</h4>
+                                                    <p class="card-text">{{$competition->description}}</p>
+                                                </div>
                                                 <div class="card-footer justify-content-between d-flex">
-                                                    <span class="text-muted">Last updated on: {{$roadmap->updated_at->format('Y-M-D')}}</span>
-                                                    <span>
-                                                <a href="{{asset('storage/'.$roadmap->target_cv)}}">
-                                                    <i class="fa fa-file-pdf-o" aria-hidden="true" data-info="Target CV"></i>
-                                                </a>
-                                                <a href="{{asset('storage/'.$roadmap->introductory_video)}}">
-                                                    <i class="fa fa-play-circle" aria-hidden="true" data-info="Intro Video"></i>
-                                                </a>
+                                                    <ul class="list-inline mb-0 me-2">
+                                                        <li class="list-inline-item">
+                                                            <a href="#"><i class="fa fa-heart-o"></i></a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#"><i class="fa fa-comment-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="btn-group" role="group" aria-label="Competition Actions">
+                                                        <!-- Show Competitors Button -->
+                                                        <a href="{{ route('company.competition.index', $competition->id) }}" class="btn btn-info btn-sm" style="background-color: #00c0ef; border-color: #00c0ef;">
+                                                            <i class="fa fa-users" aria-hidden="true"></i> Show Competitors
+                                                        </a>
+
+                                                        <!-- Edit Button -->
+                                                        <a href="{{ route('company.competition.edit', $competition->id) }}" class="btn btn-warning btn-sm" style="background-color: #f39c12; border-color: #f39c12;">
+                                                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                                                        </a>
+
                                                         <!-- Delete Button -->
-                                                <form action="{{ route('expert.roadmap.destroy', $roadmap->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this roadmap?');">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
-                                            </span>
+                                                        <form action="{{ route('company.competition.destroy', $competition->id) }}" method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm" style="background-color: #dd4b39; border-color: #dd4b39;" onclick="return confirm('Are you sure you want to delete this competition?');">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
                                         </div>

@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('competition_winners', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id')->constrained('competitions')->onDelete('cascade');
             $table->foreignId('competitor_id')->constrained('competitors')->onDelete('cascade');
             $table->integer('rank');
             $table->timestamps();

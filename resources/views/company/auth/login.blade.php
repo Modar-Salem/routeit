@@ -3,7 +3,7 @@
 <head>
 
     @section('title')
-        Expert Dashboard
+        Company Dashboard
     @endsection
 
 
@@ -21,11 +21,11 @@
                 <div class="col-lg-5 col-md-5 col-12">
                     <div class="bg-white rounded10 shadow-lg">
                         <div class="content-top-agile p-20 pb-0">
-                            <h2 class="text-primary">Expert Dashboard</h2>
+                            <h2 class="text-primary">Company Dashboard</h2>
                             <p class="mb-0">Sign in to continue to Route IT.</p>
                         </div>
                         <div class="p-40">
-                            <form action="{{ route('expert.login.action') }}" method="post" >
+                            <form action="{{ route('company.login.action') }}" method="post" >
                                 @csrf
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -63,7 +63,7 @@
                                 </div>
                             </form>
                             <div class="text-center">
-                                <p class="mt-15 mb-0">Don't have an account? <a href="{{route('expert.register')}}" class="text-warning ms-5">Sign Up</a></p>
+                                <p class="mt-15 mb-0">Don't have an account? <a href="{{route('company.register')}}" class="text-warning ms-5">Sign Up</a></p>
                             </div>
                         </div>
                     </div>

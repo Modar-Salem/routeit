@@ -9,7 +9,7 @@ class Competition extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'company_id', 'start_date', 'end_date', 'description'];
+    protected $fillable = ['company_id', 'name', 'start_date', 'end_date', 'description' , 'image'];
 
     public function company()
     {
@@ -20,4 +20,14 @@ class Competition extends Model
     {
         return $this->belongsToMany(MobileUser::class, 'competitors');
     }
+    public function winners()
+    {
+        return $this->hasMany(CompetitionWinner::class);
+    }
+
+    public function competitors()
+    {
+        return $this->hasMany(Competitor::class ,'competition_id' ) ;
+    }
+
 }

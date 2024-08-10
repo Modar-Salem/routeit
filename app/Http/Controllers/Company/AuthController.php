@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Company;
 
 use App\Models\Company;
-use App\Models\User;
 use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -21,7 +21,9 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        return view('company.dashboard') ;
+        $company = Auth::guard('company')->user();
+        $competitions = $company->competitions();
+        return view('company.dashboard',compact('competitions')) ;
     }
 
     /**
@@ -83,23 +85,24 @@ class AuthController extends Controller
         $data = $request->all();
 
         Validator::make($data, [
-            'firstname'            => 'required|string|max:255',
-            'lastname'             => 'required|string|max:255',
+            'name'            => 'required|string|max:255',
             'email'                => 'required|string|email|max:255|unique:users',
             'password'             => 'required|string|min:8|confirmed',
             'image'                => 'required|image',
-            'description'          => 'required|string' ,
+            'bio'          => 'required|string' ,
+            'location'                => 'required|string',
             'terms'                => 'accepted',
         ])->validate();
 
         $path = $this->storefile($request->file('image') , 'Company/profile/images');
 
         Company::create([
-            'name' => $request['firstname'] . ' ' . $request['lastname'],
+            'name' => $request['name'],
             'email'           => $data['email'],
-            'description'=> $data['description'] ,
+            'description'=> $data['bio'] ,
             'password'        => Hash::make($data['password']),
-            'image' => $path
+            'image' => $path ,
+            'location' => $request['location']
         ]);
 
         return redirect()->route('company.login');

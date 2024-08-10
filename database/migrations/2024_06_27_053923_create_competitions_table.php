@@ -14,9 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->text('description');
+            $table->string('image')->nullable() ;
             $table->timestamps();
         });
     }

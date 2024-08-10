@@ -58,7 +58,7 @@
                                         <div class="col-md-12 col-lg-4">
                                             <div class="card">
                                                 <a href="{{route('expert.skills.index', $roadmap->id)}}">
-                                                    <img class="card-img-top" src="{{$roadmap->cover}}" alt="Card image cap">
+                                                    <img class="card-img-top" src="{{$roadmap->cover}}" style="max-width: 100%; height: 300px;" alt="Card image cap">
                                                     <div class="card-body">
                                                         <h4 class="card-title">{{$roadmap->title}}</h4>
                                                         <p class="card-text">{{$roadmap->description}}</p>
