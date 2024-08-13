@@ -22,4 +22,9 @@ class Company extends Authenticatable
     {
         return $this->hasMany(Competition::class);
     }
+
+    public function followingUsers()
+    {
+        return $this->belongsToMany(MobileUser::class, 'users_followed_companies');
+    }
 }
