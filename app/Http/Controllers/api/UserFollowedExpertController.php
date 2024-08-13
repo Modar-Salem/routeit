@@ -19,29 +19,27 @@ class UserFollowedExpertController extends Controller
         ], 200);
     }
 
-    public function followExpert(Request $request)
+    public function toggleFollowExpert(Request $request)
     {
         $expertId = $request['expert_id'];
         $user = $request->user();
 
-        $user->followedExperts()->attach($expertId);
+        // Check if the user already follows the expert
+        $isFollowing = $user->followedExperts()->where('expert_id', $expertId)->exists();
+
+        if ($isFollowing) {
+            // If the user is already following the expert, detach (unfollow) them
+            $user->followedExperts()->detach($expertId);
+            $message = 'You have unfollowed this expert successfully.';
+        } else {
+            // If the user is not following the expert, attach (follow) them
+            $user->followedExperts()->attach($expertId);
+            $message = 'You have followed this expert successfully.';
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'You have followed this expert successfully.'
-        ], 200);
-    }
-
-    public function unfollowExpert(Request $request)
-    {
-        $expertId = $request['expert_id'];
-        $user = $request->user();
-
-        $user->followedExperts()->detach($expertId);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'You have unfollowed this expert successfully.'
+            'message' => $message
         ], 200);
     }
 }
