@@ -135,6 +135,7 @@ Route::controller(CompetitorController::class)->middleware(['auth:sanctum', 'ver
     Route::put('editProjectLink', 'editProjectLink');
     Route::get('competitions', 'competitions');
     Route::get('competitorDetails', 'competitorDetails');
+    Route::get('competitors', 'competitors');
 });
 
 Route::controller(CompetitionWinnerController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('competitionWinners')->group(function () {
