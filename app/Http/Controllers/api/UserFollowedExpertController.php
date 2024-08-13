@@ -10,8 +10,8 @@ class UserFollowedExpertController extends Controller
 {
     public function showFollowedExperts(Request $request)
     {
-        $user = $request->user();
-        $followedExperts = $user->followedExperts()->get();
+        $userId = $request['mobile_user_id'];
+        $followedExperts = MobileUser::find($userId)->followedExperts;
 
         return response()->json([
             'status' => 'success',

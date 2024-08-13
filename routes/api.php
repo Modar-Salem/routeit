@@ -51,7 +51,8 @@ Route::controller(AuthController::class)->middleware(['auth:sanctum', 'verifiedA
 
 Route::controller(MobileUserController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('getStudentProfile', 'getStudentProfile');
-    Route::put('editProfile', 'editProfile');
+    Route::post('editProfile', 'editProfile');
+    Route::get('myProfile', 'myProfile');
 });
 
 Route::controller(ExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {

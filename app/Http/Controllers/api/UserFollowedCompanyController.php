@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MobileUser;
 use Illuminate\Http\Request;
 
 class UserFollowedCompanyController extends Controller
 {
     public function showFollowedCompanies(Request $request)
     {
-        $user = $request->user();
-        $followedCompanies = $user->followedCompanies()->get();
+        $userId = $request['mobile_user_id'];
+        $followedCompanies = MobileUser::find($userId)->followedCompanies;
 
         return response()->json([
             'status' => 'success',
