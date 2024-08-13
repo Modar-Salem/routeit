@@ -10,7 +10,7 @@ class ExpertController extends Controller
 {
     public function getExpertProfile(Request $request) {
         $expertId = $request['expert_id'];
-        $expert = Expert::with('roadmaps')->find($expertId)->first();
+        $expert = Expert::with(['roadmaps', 'followingUsers'])->find($expertId)->first();
 
         return response()->json([
             'status' => 'success',
