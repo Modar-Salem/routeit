@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('competition_winners', function (Blueprint $table) {
+        Schema::create('users_followed_companies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('competition_id')->nullable()->constrained('competitions')->onDelete('cascade');
-            $table->foreignId('competitor_id')->constrained('competitors')->onDelete('cascade');
-            $table->integer('rank');
+            $table->foreignId('mobile_user_id')->constrained('mobile_users')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('competition_winners');
+        Schema::dropIfExists('users_followed_companies');
     }
 };

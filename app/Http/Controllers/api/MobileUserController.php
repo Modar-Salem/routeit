@@ -13,7 +13,7 @@ class MobileUserController extends Controller
     public function getStudentProfile(Request $request)
     {
         $studentId = $request['mobile_user_id'];
-        $student = MobileUser::find($studentId)->first();
+        $student = MobileUser::find($studentId);
 
         return response()->json([
             'status' => 'success',
@@ -29,12 +29,12 @@ class MobileUserController extends Controller
         $data['it_student'] = (boolean)$data['it_student'];
 
         $validator = Validator::make($data, [
-            'image' => ['image', 'mimes:png,jpg,jpeg,gif', 'max:10240'],
-            'birth_date' => ['date', 'after:01/01/1900', 'before:today'],
-            'it_student' => ['boolean'],
-            'university' => ['string', 'max:255'],
-            'bio' => ['min:3', 'max: 1024'],
-            'name' => ['max:250'],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,gif', 'max:10240'],
+            'birth_date' => ['required', 'date', 'after:01/01/1900', 'before:today'],
+            'it_student' => ['required', 'boolean'],
+            'university' => ['required', 'string', 'max:255'],
+            'bio' => ['required', 'min:3', 'max: 1024'],
+            'name' => ['required', 'max:250'],
         ]);
 
 
@@ -65,5 +65,14 @@ class MobileUserController extends Controller
             'status' => 'success',
             'message' => 'Changes Saved'
         ], 200);
+    }
+
+    public function myProfile(Request $request) {
+        $user = $request->user();
+
+        return response()->json([
+            'status' => 'success',
+            'user' => $user
+        ]);
     }
 }
