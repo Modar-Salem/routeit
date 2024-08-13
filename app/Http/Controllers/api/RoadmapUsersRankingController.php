@@ -14,6 +14,10 @@ class RoadmapUsersRankingController extends Controller
     {
         $roadmapId = $request['roadmap_id'];
         $rankedUsers = Roadmap::find($roadmapId)->rankedUsers->sortByDesc('pivot.userXP');
-        return $rankedUsers;
+
+        // Ensure the response is always an array of users
+        $ranking = $rankedUsers->values()->toArray();
+
+        return response()->json(['ranking' => $ranking]);
     }
 }
