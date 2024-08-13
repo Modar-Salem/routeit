@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MobileUser;
 use Illuminate\Http\Request;
 
 class UserFollowedTechnologyController extends Controller
 {
     public function showFollowedTechnologies(Request $request)
     {
-        $user = $request->user();
-        $followedTechnologies = $user->followedTechnologies()->get();
+        $userId = $request['mobile_user_id'];
+        $followedTechnologies = MobileUser::find($userId)->followedTechnologies;
 
         return response()->json([
             'status' => 'success',

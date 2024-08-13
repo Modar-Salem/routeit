@@ -110,4 +110,26 @@ class CompetitorController extends Controller
             'competitor Details' => $competitor
         ], 404);
     }
+
+    public function competitors(Request $request) {
+        $competitionId = $request['competition_id'];
+        $competition = Competition::find($competitionId);
+
+        $currentDateTime = Carbon::now();
+
+        $competitors = Competition::find($competitionId)->competitors;
+
+        foreach ($competitors as $competitor) {
+            $user = MobileUser::find($competitor['mobile_user_id']);
+
+            $competitor['competitor_name'] = $user['name'];
+            $competitor['competitor_image'] = $user['image'];
+
+            if($currentDateTime <= $competition['end_date']) {
+                $competitor['project_link'] = null;
+            }
+        }
+
+        return $competitors;
+    }
 }
