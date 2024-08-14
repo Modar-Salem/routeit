@@ -62,8 +62,7 @@ Route::controller(ExpertController::class)->middleware(['auth:sanctum', 'verifie
 
 Route::controller(UserFollowedExpertController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('showFollowedExperts', 'showFollowedExperts');
-    Route::post('followExpert', 'followExpert');
-    Route::delete('unfollowExpert', 'unfollowExpert');
+    Route::post('toggleFollowExpert', 'toggleFollowExpert');
 });
 
 Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -76,8 +75,7 @@ Route::controller(TechnologyCategoriesController::class)->middleware(['auth:sanc
 
 Route::controller(UserFollowedTechnologyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('showFollowedTechnologies', 'showFollowedTechnologies');
-    Route::post('followTechnology', 'followTechnology');
-    Route::delete('unfollowTechnology', 'unfollowTechnology');
+    Route::post('toggleFollowTechnology', 'toggleFollowTechnology');
 });
 
 Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -117,8 +115,7 @@ Route::controller(RoadmapUsersRankingController::class)->middleware(['auth:sanct
 
 Route::controller(UserFollowedCompanyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('showFollowedCompanies', 'showFollowedCompanies');
-    Route::post('followCompany', 'followCompany');
-    Route::delete('unfollowCompany', 'unfollowCompany');
+    Route::post('toggleFollowCompany', 'toggleFollowCompany');
 });
 
 Route::controller(CompanyController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {

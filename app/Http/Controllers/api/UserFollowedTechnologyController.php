@@ -19,29 +19,28 @@ class UserFollowedTechnologyController extends Controller
         ], 200);
     }
 
-    public function followTechnology(Request $request)
+    public function toggleFollowTechnology(Request $request)
     {
         $technologyId = $request['technology_id'];
         $user = $request->user();
 
-        $user->followedTechnologies()->attach($technologyId);
+        // Check if the user already follows the technology
+        $isFollowing = $user->followedTechnologies()->where('technology_id', $technologyId)->exists();
+
+        if ($isFollowing) {
+            // If the user is already following the technology, detach (unfollow) it
+            $user->followedTechnologies()->detach($technologyId);
+            $message = 'You have unfollowed this technology successfully.';
+        } else {
+            // If the user is not following the technology, attach (follow) it
+            $user->followedTechnologies()->attach($technologyId);
+            $message = 'You have followed this technology successfully.';
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'You have followed this technology successfully.'
+            'message' => $message
         ], 200);
     }
 
-    public function unfollowTechnology(Request $request)
-    {
-        $technologyId = $request['technology_id'];
-        $user = $request->user();
-
-        $user->followedExperts()->detach($technologyId);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'You have unfollowed this technology successfully.'
-        ], 200);
-    }
 }
