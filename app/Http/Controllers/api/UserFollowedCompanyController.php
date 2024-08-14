@@ -9,8 +9,8 @@ class UserFollowedCompanyController extends Controller
 {
     public function showFollowedCompanies(Request $request)
     {
-        $user = $request->user();
-        $followedCompanies = $user->followedCompanies()->get();
+        $userId = $request['mobile_user_id'];
+        $followedCompanies = MobileUser::find($userId)->followedCompanies;
 
         return response()->json([
             'status' => 'success',
@@ -18,29 +18,28 @@ class UserFollowedCompanyController extends Controller
         ], 200);
     }
 
-    public function followCompany(Request $request)
+    public function toggleFollowCompany(Request $request)
     {
         $companyId = $request['company_id'];
         $user = $request->user();
 
-        $user->followedCompanies()->attach($companyId);
+        // Check if the user already follows the company
+        $isFollowing = $user->followedCompanies()->where('company_id', $companyId)->exists();
+
+        if ($isFollowing) {
+            // If the user is already following the company, detach (unfollow) it
+            $user->followedCompanies()->detach($companyId);
+            $message = 'You have unfollowed this company successfully.';
+        } else {
+            // If the user is not following the company, attach (follow) it
+            $user->followedCompanies()->attach($companyId);
+            $message = 'You have followed this company successfully.';
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'You have followed this company successfully.'
+            'message' => $message
         ], 200);
     }
 
-    public function unfollowCompany(Request $request)
-    {
-        $companyId = $request['company_id'];
-        $user = $request->user();
-
-        $user->followedCompanies()->detach($companyId);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'You have unfollowed this company successfully.'
-        ], 200);
-    }
 }
