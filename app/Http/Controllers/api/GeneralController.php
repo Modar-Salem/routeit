@@ -14,6 +14,13 @@ class GeneralController extends Controller
     {
         $word = $request['word'];
 
+        if($word === null) {
+            return response()->json([
+                'status' => 'Failed',
+                'message' => 'word field is required.'
+            ], 422);
+        }
+
         $students = MobileUser::query()->where('name', 'like', '%' . $word . '%')
             ->get();
         $result['students'] = $students;
