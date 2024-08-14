@@ -67,7 +67,8 @@ class MobileUserController extends Controller
         ], 200);
     }
 
-    public function myProfile(Request $request) {
+    public function myProfile(Request $request)
+    {
         $user = $request->user();
 
         return response()->json([

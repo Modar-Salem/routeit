@@ -111,7 +111,8 @@ class CompetitorController extends Controller
         ], 404);
     }
 
-    public function competitors(Request $request) {
+    public function competitors(Request $request)
+    {
         $competitionId = $request['competition_id'];
         $competition = Competition::find($competitionId);
 
@@ -125,7 +126,7 @@ class CompetitorController extends Controller
             $competitor['competitor_name'] = $user['name'];
             $competitor['competitor_image'] = $user['image'];
 
-            if($currentDateTime <= $competition['end_date']) {
+            if ($currentDateTime <= $competition['end_date']) {
                 $competitor['project_link'] = null;
             }
         }
