@@ -12,7 +12,7 @@ class CompanyController extends Controller
     public function getCompanyProfile(Request $request)
     {
         $companyId = $request['company_id'];
-        $company = Company::find($companyId);
+        $company = Company::with('competitions')->find($companyId);
 
         return response()->json([
             'status' => 'success',

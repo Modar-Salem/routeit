@@ -6,6 +6,7 @@ use App\Http\Controllers\api\CompetitionController;
 use App\Http\Controllers\api\CompetitionWinnerController;
 use App\Http\Controllers\api\CompetitorController;
 use App\Http\Controllers\api\ExpertController;
+use App\Http\Controllers\api\GeneralController;
 use App\Http\Controllers\api\RoadmapUsersRankingController;
 use App\Http\Controllers\api\UserCommentReplyController;
 use App\Http\Controllers\api\UserFollowedCompanyController;
@@ -83,6 +84,7 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
     Route::get('getSkillVideos', 'getSkillVideos');
     Route::get('getSkillArticles', 'getSkillArticles');
     Route::get('getArticleSections', 'getArticleSections');
+    Route::get('roadmapSearch', 'roadmapSearch');
 });
 
 Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
@@ -138,5 +140,9 @@ Route::controller(CompetitorController::class)->middleware(['auth:sanctum', 'ver
 
 Route::controller(CompetitionWinnerController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('competitionWinners')->group(function () {
     Route::get('get', 'get');
+});
+
+Route::controller(GeneralController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
+    Route::get('generalSearch', 'generalSearch');
 });
 
