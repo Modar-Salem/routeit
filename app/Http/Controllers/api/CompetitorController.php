@@ -77,7 +77,7 @@ class CompetitorController extends Controller
         return response()->json([
             'status' => 'true',
             'message' => 'Your project\'s URL have updated successfully.'
-        ], 404);
+        ], 200);
     }
 
     public function competitions(Request $request)

@@ -84,6 +84,7 @@ Route::controller(RoadmapsController::class)->middleware(['auth:sanctum', 'verif
     Route::get('getSkillVideos', 'getSkillVideos');
     Route::get('getSkillArticles', 'getSkillArticles');
     Route::get('getArticleSections', 'getArticleSections');
+    Route::get('roadmapSearch', 'roadmapSearch');
 });
 
 Route::controller(TestController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
