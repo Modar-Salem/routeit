@@ -14,7 +14,7 @@ class CompetitionWinnerSeeder extends Seeder
     public function run(): void
     {
         CompetitionWinner::create([
-           'competitor_id' => 2,
+            'competitor_id' => 2,
             'rank' => 2
         ]);
         CompetitionWinner::create([

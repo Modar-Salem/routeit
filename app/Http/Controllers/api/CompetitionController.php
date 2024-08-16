@@ -20,6 +20,7 @@ class CompetitionController extends Controller
 
             $competition['company_image'] = $company['image'];
             $competition['company_name'] = $company['name'];
+            $competition['isFinished'] = true;
         }
 
         return response()->json([
@@ -40,6 +41,7 @@ class CompetitionController extends Controller
 
             $competition['company_image'] = $company['image'];
             $competition['company_name'] = $company['name'];
+            $competition['isFinished'] = false;
         }
 
         return response()->json([
@@ -58,6 +60,7 @@ class CompetitionController extends Controller
 
             $competition['company_image'] = $company['image'];
             $competition['company_name'] = $company['name'];
+            $competition['isFinished'] = false;
         }
 
         return response()->json([
@@ -68,6 +71,7 @@ class CompetitionController extends Controller
 
     public function all()
     {
+        $currentDateTime = Carbon::now();
         $competitions = Competition::get();
 
         foreach ($competitions as $competition) {
@@ -75,6 +79,12 @@ class CompetitionController extends Controller
 
             $competition['company_image'] = $company['image'];
             $competition['company_name'] = $company['name'];
+
+            if ($competition['end_date'] < $currentDateTime) {
+                $competition['isFinished'] = true;
+            } else {
+                $competition['isFinished'] = false;
+            }
         }
 
         return response()->json([
