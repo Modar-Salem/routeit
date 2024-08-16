@@ -1,10 +1,10 @@
-@extends('layouts.admin.master')
+@extends('layouts.expert.master')
 @section('title')
     Test Question Info
 @endsection
 
 @section('route_dashboard')
-    <a href="{{route('admin.dashboard')}}" class="logo">
+    <a href="{{route('expert.dashboard')}}" class="logo">
         @endsection
 
         @section('content')

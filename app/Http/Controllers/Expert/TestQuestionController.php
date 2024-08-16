@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Expert;
 
 use App\Http\Controllers\Controller;
 use App\Models\Test;
@@ -18,7 +18,7 @@ class TestQuestionController extends Controller
         $test = Test::find($test_id) ;
         $test_questions  = $test->questions ;
 
-        return view('admin.test_question.index' , compact('test_questions' , 'test_id')) ;
+        return view('expert.test_question.index' , compact('test_questions' , 'test_id')) ;
     }
 
     /**
@@ -26,7 +26,7 @@ class TestQuestionController extends Controller
      */
     public function create(string $test_id)
     {
-        return view('admin.test_question.create',compact('test_id')) ;
+        return view('expert.test_question.create',compact('test_id')) ;
     }
 
     /**
@@ -68,7 +68,7 @@ class TestQuestionController extends Controller
             DB::rollBack();
             throw  $throwable ;
         }
-        return redirect()->route('admin.test_question.index' , $test_id) ;
+        return redirect()->route('expert.test_question.index' , $test_id) ;
     }
 
     /**
@@ -77,7 +77,7 @@ class TestQuestionController extends Controller
     public function show(string $id)
     {
         $test_question = TestQuestion::find($id) ;
-        return view('admin.test_question.show' , compact('test_question')) ;
+        return view('expert.test_question.show' , compact('test_question')) ;
     }
 
 }

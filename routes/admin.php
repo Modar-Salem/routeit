@@ -49,19 +49,8 @@ Route::controller(\App\Http\Controllers\admin\TechnologyController::class)->midd
     Route::delete('/{technology}' , 'destroy')->name('admin.technology.destroy') ;
 
 });
-Route::controller(\App\Http\Controllers\admin\TestController::class)->middleware(['auth'])->prefix('test')->group(function () {
-    Route::get('index' , 'index')->name('admin.test.index') ;
-    Route::get('create' , 'create')->name('admin.test.create') ;
-    Route::post('store' , 'store')->name('admin.test.store') ;
-});
 
-Route::controller(\App\Http\Controllers\admin\TestQuestionController::class)->middleware(['auth'])->prefix('test_question')->group(function () {
-    Route::get('index/{test_id}' , 'index')->name('admin.test_question.index') ;
-    Route::get('create/{test_id}' , 'create')->name('admin.test_question.create') ;
-    Route::post('store/{test_id}' , 'store')->name('admin.test_question.store') ;
-    Route::get('show/{test_question_id}' , 'show')->name('admin.test_question.show') ;
 
-});
 
 
 Route::controller(\App\Http\Controllers\admin\MobileUserController::class)->middleware(['auth'])->prefix('mobile_user')->group(function () {
@@ -75,6 +64,5 @@ Route::controller(\App\Http\Controllers\admin\ExpertController::class)->middlewa
 
 Route::middleware(['auth'])->group(function (){
     Route::get('dashboard' , [\App\Http\Controllers\Admin\AuthController::class , 'dashboard'])->name('admin.dashboard');
-
 });
 

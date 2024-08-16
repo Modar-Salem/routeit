@@ -21,7 +21,7 @@
                                         <h4 class="box-title">Sample form 1</h4>
                                     </div>
                                     <!-- /.box-header -->
-                                    <form action="{{ route('expert.skills.store' ,  $roadmap_id) }}" method="POST"
+                                    <form action="{{ route('expert.skills.store' ,  $skill_id) }}" method="POST"
                                           enctype="multipart/form-data">
                                         @csrf
                                         @if ($errors->any())

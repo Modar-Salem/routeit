@@ -1,10 +1,10 @@
-@extends('layouts.admin.master')
+@extends('layouts.expert.master')
 @section('title')
     Test Table
 @endsection
 
 @section('route_dashboard')
-    <a href="{{route('admin.dashboard')}}" class="logo"></a>
+    <a href="{{route('expert.dashboard')}}" class="logo"></a>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
                         <div class="box">
                             <div class="box-header d-flex justify-content-between align-items-center">
                                 <h4 class="box-title">Test  Information</h4>
-                                <a href="{{route('admin.test.create')}}" class="btn btn-primary" style="margin-right: 20px; width: 20%">Add test </a>
+                                <a href="{{route('expert.test.create' , $skill_id)}}" class="btn btn-primary" style="margin-right: 20px; width: 20%">Add test </a>
 
                             </div>
                             <div class="box-body">
@@ -28,7 +28,6 @@
                                            style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Technology</th>
                                                 <th>XP</th>
                                                 <th>Question Count</th>
                                                 <th>Actions</th>
@@ -37,13 +36,12 @@
                                         <tbody>
                                         @foreach($tests as $test)
                                             <tr>
-                                                <td>{{ $test->technology->name}}</td>
                                                 <td>{{ $test->total_xp}}</td>
                                                 <td>{{ $test->questions()->count()}}</td>
                                                 <td>
                                                     <div class="d-flex flex-row">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('admin.test_question.index', $test->id) }}" type="button" class="btn btn-primary ml-3">View &rarr;</a>
+                                                            <a href="{{ route('expert.test_question.index', $test->id) }}" type="button" class="btn btn-primary ml-3">View &rarr;</a>
                                                         </div>
                                                     </div>
                                                 </td>

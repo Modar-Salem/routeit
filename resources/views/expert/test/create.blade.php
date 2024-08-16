@@ -1,10 +1,10 @@
-@extends('layouts.admin.master')
+@extends('layouts.expert.master')
 @section('title')
     Add Test
 @endsection
 
 @section('route_dashboard')
-    <a href="{{route('admin.dashboard')}}" class="logo">
+    <a href="{{route('expert.dashboard')}}" class="logo">
         @endsection
 
         @section('content')
@@ -21,7 +21,7 @@
                                         <h4 class="box-title">Sample form 1</h4>
                                     </div>
                                     <!-- /.box-header -->
-                                    <form action="{{ route('admin.test.store') }}" method="POST"
+                                    <form action="{{ route('expert.test.store' , $skill_id) }}" method="POST"
                                           enctype="multipart/form-data">
                                         @csrf
                                         @if ($errors->any())
@@ -36,12 +36,8 @@
                                         <div class="box-body">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <h5 class="my-10">Select The Technology</h5>
-                                                    <select name="technology_id" class="selectpicker">
-                                                        @foreach($technologies as $technology)
-                                                            <option value="{{$technology->id}}">{{$technology->name}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <h5 class="my-10">Total Xp</h5>
+                                                    <input type="number" name="total_xp" required>
                                                 </div>
                                             </div>
                                             <hr/>

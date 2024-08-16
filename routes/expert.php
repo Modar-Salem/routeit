@@ -38,7 +38,6 @@ Route::controller(\App\Http\Controllers\Expert\SkillController::class)->middlewa
 
 
 Route::controller(\App\Http\Controllers\Expert\SkillContentController::class)->middleware(['auth:expert'])->prefix('skill_content')->group(function () {
-
     Route::get('index/{skill_id}' , 'index')->name('expert.skills_content.index') ;
     Route::get('create/{skill_id}' , 'create')->name('expert.skills_content.create') ;
     Route::post('store/{skill_id}' , 'store')->name('expert.skills_content.store') ;
@@ -47,4 +46,17 @@ Route::controller(\App\Http\Controllers\Expert\SkillContentController::class)->m
     Route::get('{skill_content}/edit' , 'edit')->name('expert.skills_content.edit') ;
     Route::put('/{skill_content}' , 'update')->name('expert.skills_content.update') ;
     Route::delete('/{skill_content}' , 'destroy')->name('expert.skills_content.destroy') ;
+});
+
+Route::controller(\App\Http\Controllers\Expert\TestController::class)->middleware(['auth:expert'])->prefix('test')->group(function () {
+    Route::get('index/{skill_id}' , 'index')->name('expert.test.index') ;
+    Route::get('create/{skill_id}' , 'create')->name('expert.test.create') ;
+    Route::post('store/{skill_id}' , 'store')->name('expert.test.store') ;
+});
+
+Route::controller(\App\Http\Controllers\Expert\TestQuestionController::class)->middleware(['auth:expert'])->prefix('test_question')->group(function () {
+    Route::get('index/{test_id}' , 'index')->name('expert.test_question.index') ;
+    Route::get('create/{test_id}' , 'create')->name('expert.test_question.create') ;
+    Route::post('store/{test_id}' , 'store')->name('expert.test_question.store') ;
+    Route::get('show/{test_question_id}' , 'show')->name('expert.test_question.show') ;
 });

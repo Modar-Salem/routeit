@@ -45,6 +45,7 @@
                                                                 <button class="waves-effect waves-light btn btn-danger-light  ml-3" style="width:100%; height: 100% ;">Delete</button>
                                                             </form>
                                                             <a href="{{ route('expert.skills.edit', $skill) }}" type="button" class="waves-effect waves-light btn btn-warning-light  ml-3">Edit</a>
+                                                            <a href="{{ route('expert.test.index', $skill) }}" type="button" class="waves-effect waves-light btn btn-success-light  ml-3">Add Test</a>
                                                             <a href="{{ route('expert.skills_content.index', $skill) }}" type="button" class="btn btn-primary ml-3">Add Video OR Blogs &rarr;</a>
                                                         </div>
                                                     </div>

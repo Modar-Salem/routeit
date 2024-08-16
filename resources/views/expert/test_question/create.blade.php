@@ -1,10 +1,10 @@
-@extends('layouts.admin.master')
+@extends('layouts.expert.master')
 @section('title')
     Add Test Question
 @endsection
 
 @section('route_dashboard')
-    <a href="{{route('admin.dashboard')}}" class="logo">
+    <a href="{{route('expert.dashboard')}}" class="logo">
         @endsection
 
         @section('content')
@@ -21,7 +21,7 @@
                                         <h4 class="box-title">Sample form 1</h4>
                                     </div>
                                     <!-- /.box-header -->
-                                    <form action="{{ route('admin.test_question.store' , $test_id) }}" method="POST"
+                                    <form action="{{ route('expert.test_question.store' , $test_id) }}" method="POST"
                                           enctype="multipart/form-data">
                                         @csrf
                                         @if ($errors->any())

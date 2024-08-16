@@ -18,12 +18,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.test.index')}}" >
-                            <i data-feather="edit"></i>
-                            <span>Test</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{route('admin.expert.index')}}" >
                             <i data-feather="award"></i>
                             <span>Experts User</span>

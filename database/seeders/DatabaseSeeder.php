@@ -40,11 +40,10 @@ class DatabaseSeeder extends Seeder
             CompetitionWinnerSeeder::class,
             UsersFollowedCompaniesSeeder::class
         ]);
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+//         \App\Models\User::create([
+//             'name' => 'Test User',
+//             'email' => 'test@example.com',
+//         ]);
     }
 }
