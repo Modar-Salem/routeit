@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Expert;
 
+use App\Events\NewRoadmapNotificationEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Expert;
+use App\Models\Notification;
 use App\Models\Roadmap;
 use App\Models\Technology;
 use App\Models\TechnologyLevel;
@@ -12,14 +15,15 @@ use Illuminate\Support\Facades\Auth;
 
 class RoadMapController extends Controller
 {
-    use FileStorageTrait ;
+    use FileStorageTrait;
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $technologies = Technology::all() ;
-        return view('expert.roadmap.create' , compact('technologies'));
+        $technologies = Technology::all();
+        return view('expert.roadmap.create', compact('technologies'));
     }
 
     /**
@@ -29,7 +33,7 @@ class RoadMapController extends Controller
     {
         $request->validate([
             'technology_id' => 'required|exists:technologies,id',
-            'level' => 'required|in:junior,mid-level,senior' ,
+            'level' => 'required|in:junior,mid-level,senior',
             'title' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'description' => 'required|string',
@@ -40,23 +44,33 @@ class RoadMapController extends Controller
         ]);
 
         $data = $request->all();
-        $data['technology_level_id'] = TechnologyLevel::where('technology_id' , $request['technology_id'])->where('level' , $request['level'])->first()->id;
-        $data['expert_id'] = Auth::guard('expert')->id() ;
+        $data['technology_level_id'] = TechnologyLevel::where('technology_id', $request['technology_id'])->where('level', $request['level'])->first()->id;
+        $data['expert_id'] = Auth::guard('expert')->id();
 
         if ($request->hasFile('introductory_video')) {
-            $introductory_video = $this->storefile($request->file('introductory_video') , 'RoadMap introductory_video');
+            $introductory_video = $this->storefile($request->file('introductory_video'), 'RoadMap introductory_video');
             $data['introductory_video'] = $introductory_video;
         }
         if ($request->hasFile('cover')) {
-            $cover = $this->storefile($request->file('cover') , 'RoadMap Cover');
+            $cover = $this->storefile($request->file('cover'), 'RoadMap Cover');
             $data['cover'] = $cover;
         }
         if ($request->hasFile('target_cv')) {
-            $targetCv = $this->storefile($request->file('target_cv') , 'RoadMap CV');
+            $targetCv = $this->storefile($request->file('target_cv'), 'RoadMap CV');
             $data['target_cv'] = $targetCv;
         }
 
         Roadmap::create($data);
+
+        $expert = Expert::find($data['expert_id']);
+        $notification = $expert['name'] . ' has added a new roadmap!';
+        $followingUsers = $expert->followingUsers;
+
+        Notification::create([
+            'notification' => $notification
+        ]);
+
+        event(new NewRoadmapNotificationEvent($expert, $notification));
 
         return redirect()->route('expert.dashboard')->with('success', 'Record created successfully!');
     }
@@ -91,8 +105,8 @@ class RoadMapController extends Controller
      */
     public function destroy(string $id)
     {
-        $roadMap = Roadmap::find($id) ;
-        $roadMap->delete() ;
-        return redirect()->back() ;
+        $roadMap = Roadmap::find($id);
+        $roadMap->delete();
+        return redirect()->back();
     }
 }

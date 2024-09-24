@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CommunityController;
 use App\Http\Controllers\api\CompanyController;
 use App\Http\Controllers\api\CompetitionController;
 use App\Http\Controllers\api\CompetitionWinnerController;
@@ -144,5 +145,10 @@ Route::controller(CompetitionWinnerController::class)->middleware(['auth:sanctum
 
 Route::controller(GeneralController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->group(function () {
     Route::get('generalSearch', 'generalSearch');
+});
+
+Route::controller(CommunityController::class)->middleware(['auth:sanctum', 'verifiedAndCompleted'])->prefix('community')->group(function () {
+    Route::post('sendMessage', 'sendMessage');
+    Route::get('showMessages', 'showMessages');
 });
 

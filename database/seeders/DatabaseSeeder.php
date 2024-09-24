@@ -40,6 +40,11 @@ class DatabaseSeeder extends Seeder
             CompetitionWinnerSeeder::class,
             UsersFollowedCompaniesSeeder::class
         ]);
+
+        \App\Models\Community::factory(50)->create();
+        \App\Models\Notification::factory(50)->create();
+        \App\Models\NotificationMobileUserPivot::factory(50)->create();
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

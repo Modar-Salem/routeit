@@ -40,4 +40,9 @@ class Roadmap extends Model
         return $this->belongsToMany(MobileUser::class, 'previous_week_roadmap_users_rankings')
             ->withPivot(['userXP']);
     }
+
+    public function users_community()
+    {
+        return $this->belongsToMany(MobileUser::class, 'communities');
+    }
 }

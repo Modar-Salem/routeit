@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('competition_winners', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('competition_id')->nullable()->constrained('competitions')->onDelete('cascade');
-            $table->foreignId('competitor_id')->constrained('competitors')->onDelete('cascade');
-            $table->integer('rank');
+            $table->string('notification');
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('competition_winners');
+        Schema::dropIfExists('notifications');
     }
 };

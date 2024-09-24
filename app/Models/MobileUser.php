@@ -96,4 +96,14 @@ class MobileUser extends Authenticatable
         return $this->belongsToMany(Competition::class, 'competitors')
             ->withPivot(['project_link']);
     }
+
+    public function roadmaps_community()
+    {
+        return $this->belongsToMany(Roadmap::class, 'communities');
+    }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'notification_mobile_user');
+    }
 }

@@ -18,5 +18,10 @@ Route::get('/' , function () {
     return view('admin.auth.login') ;
 });
 
+Route::get('/playground', function () {
+    event(new \App\Events\PlaygroundEvent());
+    return null;
+});
+
 
 
